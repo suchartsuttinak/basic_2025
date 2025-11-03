@@ -1,7 +1,7 @@
 @extends('admin.admin_master')
 @section('admin')
-    <div class="content">
 
+    <div class="content">
         <!-- Start Content-->
         <div class="container-fluid">
 
