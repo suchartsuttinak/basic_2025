@@ -27,9 +27,10 @@
 
                 <li class="menu-title">Menu</li>
 
+                <!-- Dashboard -->
                 <li>
                     <a href="#sidebarDashboards" data-bs-toggle="collapse">
-                        <i data-feather="home"></i>
+                     <i data-feather="home"></i>
                         <span> Dashboard </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -45,25 +46,27 @@
                     </div>
                 </li>
 
-                <!-- <li>
-                                <a href="landing.html" target="_blank">
-                                    <i data-feather="globe"></i>
-                                    <span> Landing </span>
-                                </a>
-                            </li> -->
+                <!-- Landing -->
+                 <li>
+                    <a href="landing.html" target="_blank">
+                        <i data-feather="globe"></i>
+                        <span> Landing </span>
+                    </a>
+                    </li> 
 
                 <li class="menu-title">Pages</li>
 
+            <!-- Brand Manage -->
                 <li>
                     <a href="#sidebarAuth" data-bs-toggle="collapse">
                         <i data-feather="users"></i>
-                        <span> Authentication </span>
+                        <span> Brand Manage </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarAuth">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="auth-login.html" class="tp-link">Log In</a>
+                                <a href="{{ route('all.brand') }}" class="tp-link">All Brand</a>
                             </li>
                             <li>
                                 <a href="auth-register.html" class="tp-link">Register</a>
@@ -87,33 +90,23 @@
                     </div>
                 </li>
 
+            <!-- WareHouse Manage -->
                 <li>
-                    <a href="#sidebarError" data-bs-toggle="collapse">
+                    <a href="#WareHouse" data-bs-toggle="collapse">
                         <i data-feather="alert-octagon"></i>
-                        <span> Error Pages </span>
+                        <span> Warehouse Pages </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="sidebarError">
+                    <div class="collapse" id="WareHouse">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="error-404.html" class="tp-link">Error 404</a>
-                            </li>
-                            <li>
-                                <a href="error-500.html" class="tp-link">Error 500</a>
-                            </li>
-                            <li>
-                                <a href="error-503.html" class="tp-link">Error 503</a>
-                            </li>
-                            <li>
-                                <a href="error-429.html" class="tp-link">Error 429</a>
-                            </li>
-                            <li>
-                                <a href="offline-page.html" class="tp-link">Offline Page</a>
-                            </li>
+                                <a href="{{ route('all.warehouse') }}" class="tp-link">All Warehouse</a>
+                            </li>                      
                         </ul>
                     </div>
                 </li>
 
+                <!-- Utility Pages -->
                 <li>
                     <a href="#sidebarExpages" data-bs-toggle="collapse">
                         <i data-feather="file-text"></i>
@@ -130,29 +123,12 @@
                             </li>
                             <li>
                                 <a href="pages-pricing.html" class="tp-link">Pricing</a>
-                            </li>
-                            <li>
-                                <a href="pages-timeline.html" class="tp-link">Timeline</a>
-                            </li>
-                            <li>
-                                <a href="pages-invoice.html" class="tp-link">Invoice</a>
-                            </li>
-                            <li>
-                                <a href="pages-faqs.html" class="tp-link">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="pages-gallery.html" class="tp-link">Gallery</a>
-                            </li>
-                            <li>
-                                <a href="pages-maintenance.html" class="tp-link">Maintenance</a>
-                            </li>
-                            <li>
-                                <a href="pages-coming-soon.html" class="tp-link">Coming Soon</a>
-                            </li>
+                            </li>                      
                         </ul>
                     </div>
                 </li>
 
+                <!-- Calendar -->
                 <li>
                     <a href="calendar.html" class="tp-link">
                         <i data-feather="calendar"></i>
@@ -162,6 +138,7 @@
 
                 <li class="menu-title mt-2">General</li>
 
+                <!-- Components -->
                 <li>
                     <a href="#sidebarBaseui" data-bs-toggle="collapse">
                         <i data-feather="package"></i>
@@ -178,64 +155,7 @@
                             </li>
                             <li>
                                 <a href="ui-badges.html" class="tp-link">Badges</a>
-                            </li>
-                            <li>
-                                <a href="ui-breadcrumb.html" class="tp-link">Breadcrumb</a>
-                            </li>
-                            <li>
-                                <a href="ui-buttons.html" class="tp-link">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="ui-cards.html" class="tp-link">Cards</a>
-                            </li>
-                            <li>
-                                <a href="ui-collapse.html" class="tp-link">Collapse</a>
-                            </li>
-                            <li>
-                                <a href="ui-dropdowns.html" class="tp-link">Dropdowns</a>
-                            </li>
-                            <li>
-                                <a href="ui-video.html" class="tp-link">Embed Video</a>
-                            </li>
-                            <li>
-                                <a href="ui-grid.html" class="tp-link">Grid</a>
-                            </li>
-                            <li>
-                                <a href="ui-images.html" class="tp-link">Images</a>
-                            </li>
-                            <li>
-                                <a href="ui-list.html" class="tp-link">List Group</a>
-                            </li>
-                            <li>
-                                <a href="ui-modals.html" class="tp-link">Modals</a>
-                            </li>
-                            <li>
-                                <a href="ui-placeholders.html" class="tp-link">Placeholders</a>
-                            </li>
-                            <li>
-                                <a href="ui-pagination.html" class="tp-link">Pagination</a>
-                            </li>
-                            <li>
-                                <a href="ui-popovers.html" class="tp-link">Popovers</a>
-                            </li>
-                            <li>
-                                <a href="ui-progress.html" class="tp-link">Progress</a>
-                            </li>
-                            <li>
-                                <a href="ui-scrollspy.html" class="tp-link">Scrollspy</a>
-                            </li>
-                            <li>
-                                <a href="ui-spinners.html" class="tp-link">Spinners</a>
-                            </li>
-                            <li>
-                                <a href="ui-tabs.html" class="tp-link">Tabs</a>
-                            </li>
-                            <li>
-                                <a href="ui-tooltips.html" class="tp-link">Tooltips</a>
-                            </li>
-                            <li>
-                                <a href="ui-typography.html" class="tp-link">Typography</a>
-                            </li>
+                            </li>                      
                         </ul>
                     </div>
                 </li>
@@ -347,51 +267,6 @@
                             </li>
                             <li>
                                 <a href='charts-column.html'>Column</a>
-                            </li>
-                            <li>
-                                <a href='charts-bar.html'>Bar</a>
-                            </li>
-                            <li>
-                                <a href='charts-mixed.html'>Mixed</a>
-                            </li>
-                            <li>
-                                <a href='charts-timeline.html'>Timeline</a>
-                            </li>
-                            <li>
-                                <a href='charts-rangearea.html'>Range Area</a>
-                            </li>
-                            <li>
-                                <a href='charts-funnel.html'>Funnel</a>
-                            </li>
-                            <li>
-                                <a href='charts-candlestick.html'>Candlestick</a>
-                            </li>
-                            <li>
-                                <a href='charts-boxplot.html'>Boxplot</a>
-                            </li>
-                            <li>
-                                <a href='charts-bubble.html'>Bubble</a>
-                            </li>
-                            <li>
-                                <a href='charts-scatter.html'>Scatter</a>
-                            </li>
-                            <li>
-                                <a href='charts-heatmap.html'>Heatmap</a>
-                            </li>
-                            <li>
-                                <a href='charts-treemap.html'>Treemap</a>
-                            </li>
-                            <li>
-                                <a href='charts-pie.html'>Pie</a>
-                            </li>
-                            <li>
-                                <a href='charts-radialbar.html'>Radialbar</a>
-                            </li>
-                            <li>
-                                <a href='charts-radar.html'>Radar</a>
-                            </li>
-                            <li>
-                                <a href='charts-polararea.html'>Polar</a>
                             </li>
                         </ul>
                     </div>

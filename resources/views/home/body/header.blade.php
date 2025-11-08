@@ -106,12 +106,24 @@
         </div>
         <div class="col-auto d-flex align-items-center">
           <div class="lonyo-header-info-wraper2">
+
+           <!-- Login -->
+            @auth   
             <div class="lonyo-header-info-content">
               <ul>
-                <li><a href="{{ route('login') }}">Log in</a></li>
+                <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
               </ul>
             </div>
-            <a class="lonyo-default-btn lonyo-header-btn" href="conact-us.html">Book a demo</a>
+            @else
+            <div class="lonyo-header-info-content">
+              <ul>
+                <li><a href="{{ route('login') }}">Login</a></li>
+              </ul>
+            </div>
+             @endauth
+          <!-- End Login -->
+
+          <a class="lonyo-default-btn lonyo-header-btn" href="conact-us.html">Book a demo</a>
           </div>
           <div class="lonyo-header-menu">
             <nav class="navbar site-navbar justify-content-between">
@@ -126,5 +138,4 @@
         </div>
       </div>
     </div>
-
   </header>
