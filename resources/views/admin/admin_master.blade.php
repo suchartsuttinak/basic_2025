@@ -79,27 +79,29 @@
     <script src="{{ asset('backend/assets/libs/waypoints/lib/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/feather-icons/feather.min.js') }}"></script>
+     <!-- Feather Init -->
+    <script>
+        feather.replace();
+    </script>
 
-    <!-- Apexcharts JS -->
+    <!-- Charts และ Dashboard Apexcharts JS -->
     <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
     <!-- for basic area chart -->
     <script src="https://apexcharts.com/samples/assets/stock-prices.js"></script>
-
     <!-- Widgets Init Js -->
     <script src="{{ asset('backend/assets/js/pages/analytics-dashboard.init.js') }}"></script>
 
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
     <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+    
+    <!-- form validation js && javascript validation -->
+    <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
 
       <!-- App js-->
       <script src="{{ asset('backend/assets/js/app.js') }}"></script>
 
-      <!-- Feather Init -->
-<script>
-    feather.replace();
-</script>
+     
 
  <!-- Datatables js -->
         <script src="{{ asset('backend/assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>

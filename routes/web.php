@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\WareHouseController;
 
 
@@ -58,6 +61,55 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/warehouse/{id}', 'EditWarehouse')->name('edit.warehouse');
         Route::post('/update/warehouse', 'UpdateWarehouse')->name('update.warehouse');
         Route::get('/delete/warehouse/{id}', 'DeleteWarehouse')->name('delete.warehouse');
+       
+    });
+});
+//-- Supplier All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(SupplierController::class)->group(function () {
+        Route::get('/all/supplier', 'AllSupplier')->name('all.supplier'); 
+        Route::get('/add/supplier', 'AddSupplier')->name('add.supplier'); 
+        Route::post('/store/supplier', 'StoreSupplier')->name('store.supplier');
+        Route::get('/edit/supplier/{id}', 'EditSupplier')->name('edit.supplier');
+        Route::post('/update/supplier', 'UpdateSupplier')->name('update.supplier');
+        Route::get('/delete/supplier/{id}', 'DeleteSupplier')->name('delete.supplier');
+       
+        
+    });
+});
+
+//-- Customer All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/all/customer', 'AllCustomer')->name('all.customer'); 
+        Route::get('/add/customer', 'AddCustomer')->name('add.customer');        
+        Route::post('/store/customer', 'StoreCustomer')->name('store.customer'); 
+        Route::get('/edit/customer/{id}', 'EditCustomer')->name('edit.customer');  
+        Route::post('/update/customer', 'UpdateCustomer')->name('update.customer'); 
+        Route::get('/delete/customer/{id}', 'DeleteCustomer')->name('delete.customer');  
+           
+    });
+});
+
+//-- Category All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/all/category', 'AllCategory')->name('all.category'); 
+        Route::post('/store/category', 'StoreCategory')->name('store.category');
+        Route::get('/edit/category/{id}', 'EditCategory');
+        Route::post('/update/category', 'UpdateCategory')->name('update.category');
+        Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+    });
+});
+
+//-- Product All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(ProductController::class)->group(function () { 
+        Route::get('/all/product', 'AllProduct')->name('all.product'); 
+        Route::get('/add/product', 'AddProduct')->name('add.product');
+        Route::post('/store/product', 'StoreProduct')->name('store.product');
+        Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product'); 
+        Route::post('/update/product', 'UpdateProduct')->name('update.product');
        
     });
 });

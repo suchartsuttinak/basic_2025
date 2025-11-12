@@ -110,13 +110,13 @@
                 <li>
                     <a href="#sidebarExpages" data-bs-toggle="collapse">
                         <i data-feather="file-text"></i>
-                        <span> Utility </span>
+                        <span> Supplier Manage </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarExpages">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="pages-starter.html" class="tp-link">Starter</a>
+                                <a href="{{ route('all.supplier') }}" class="tp-link">All Supplier</a>
                             </li>
                             <li>
                                 <a href="pages-profile.html" class="tp-link">Profile</a>
@@ -124,6 +124,47 @@
                             <li>
                                 <a href="pages-pricing.html" class="tp-link">Pricing</a>
                             </li>                      
+                        </ul>
+                    </div>
+                </li>
+
+                 <!-- Customer Pages -->
+                <li>
+                    <a href="#customer" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> Customer Manage </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="customer">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('all.customer') }}" class="tp-link">All Customer</a>
+                            </li>
+                            <li>
+                                <a href="pages-profile.html" class="tp-link">Profile</a>
+                            </li>
+                            <li>
+                                <a href="pages-pricing.html" class="tp-link">Pricing</a>
+                            </li>                      
+                        </ul>
+                    </div>
+                </li>
+
+                 <!-- ProductCategory Pages -->
+                <li>
+                    <a href="#product" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> Product Manage </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="product">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('all.category') }}" class="tp-link">All Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('all.product') }}" class="tp-link">AllProduct</a> 
+                            </li>                          
                         </ul>
                     </div>
                 </li>
