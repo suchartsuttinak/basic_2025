@@ -29,9 +29,13 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
+            "Database\\Seeders\\": "database/seeders/"         
+        },
+         "files": [
+        "app/Helpers/ThaiDateHelper.php"
+        ]
+    },  
+     
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"

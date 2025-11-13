@@ -168,6 +168,22 @@
                         </ul>
                     </div>
                 </li>
+      
+                 <!-- Client Pages -->
+                <li>
+                    <a href="#client" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> Client Manage </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="client">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('client.all') }}" class="tp-link">All Client</a>
+                            </li>                                                
+                        </ul>
+                    </div>
+                </li>
 
                 <!-- Calendar -->
                 <li>

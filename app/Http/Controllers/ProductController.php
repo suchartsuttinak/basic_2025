@@ -120,7 +120,7 @@ class ProductController extends Controller
        }
 
        $notification = array(
-            'message' => 'Product Inserted Successfully',
+            'message' => 'เพิ่มรายการสินค้าเรียบร้อย',
             'alert-type' => 'success'
         );
         return redirect()->route('all.product')->with($notification);
@@ -185,10 +185,32 @@ class ProductController extends Controller
         }
 
         $notification = array(
-            'message' => 'Product Updated Successfully',
+            'message' => 'แก้ไขรายการสินค้าเรียบร้อย',
             'alert-type' => 'success'
         );
         return redirect()->route('all.product')->with($notification);
+    }
+
+    public function DeleteProduct($id)
+    {
+       $product = Product::findOrFail($id);
+
+       $images = ProductImage::where('product_id', $id)->get();
+       foreach($images as $img){
+       $imagePath = public_path($img->image);
+           if(file_exists($imagePath)){
+               unlink($imagePath);
+           }
+       }
+         ProductImage::where('product_id', $id)->delete();
+     
+        $product->delete();
+
+       $notification = array(
+            'message' => 'ลบรายการสินค้าสำเร็จ',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('all.product')->with($notification);   
     }
 
 

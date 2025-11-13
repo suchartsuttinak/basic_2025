@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\WareHouseController;
+
 
 
 Route::get('/', function () {
@@ -110,6 +112,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/product', 'StoreProduct')->name('store.product');
         Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product'); 
         Route::post('/update/product', 'UpdateProduct')->name('update.product');
-       
+        Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');    
+    });
+});
+
+//-- Client All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(ClientController::class)->group(function () { 
+        Route::get('/client/index', 'ClientAll')->name('client.all');  
+        Route::get('/client/add', 'ClientAdd')->name('client.add');
+        Route::post('/client/store', 'ClientStore')->name('client.store');  
+        Route::get('/client/edit/{id}', 'ClientEdit')->name('client.edit'); 
+        Route::post('/client/update', 'ClientUpdate')->name('client.update');
+        Route::get('/client/delete/{id}', 'ClientDelete')->name('client.delete');
     });
 });
