@@ -7,10 +7,10 @@
         {{-- Header --}}
         <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
             <div class="flex-grow-1">
-                <h4 class="fs-18 fw-semibold m-0">Client Tables</h4>
+                <h4 class="fs-18 fw-semibold m-0">Case Tables</h4>
             </div>
             <div class="text-end">
-                <a href="{{ route('client.add') }}" class="btn btn-secondary">Add Client</a>
+                <a href="{{ route('case.add') }}" class="btn btn-secondary">Add Case</a>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Client List</h5>
+                        <h5 class="card-title mb-0">Case List</h5>
                     </div>
 
         <div class="card-body">
@@ -38,19 +38,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($clients as $key => $client)
+                    @foreach ($cases as $key => $case)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $client->first_name }} {{ $client->last_name }}</td>
-                            <td>{{ ucfirst($client->gender) }}</td>
+                            <td>{{ $case->first_name }} {{ $case->last_name }}</td>
+                            <td>{{ ucfirst($case->gender) }}</td>
                             {{-- <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('d/m/Y') }}</td>> --}}
-                            <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($client->birth_date) }}</td>
-                            <td>{{ $client->address }}</td>
-                            <td>{{ $client->phone }}</td>
+                            <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($case->birth_date) }}</td>
+                            <td>{{ $case->address }}</td>
+                            <td>{{ $case->phone }}</td>
                             <td>
-                                @if($client->problems->isNotEmpty())
+                                @if($case->problems->isNotEmpty())
                                     <ul class="mb-0 ps-3">
-                                        @foreach($client->problems as $problem)
+                                        @foreach($case->problems as $problem)
                                             <li>{{ $problem->name }}</li>
                                         @endforeach
                                     </ul>
@@ -59,11 +59,11 @@
                                 @endif
                             </td>
                             <td>
-                                <a title="Edit" href="{{ route('client.edit', $client->id) }}" 
+                                <a title="Edit" href="" 
                                     class="btn btn-success btn-sm">
                                     <span class="mdi mdi-book-edit-outline mdi-18px"></span>
                                 </a>
-                               <a title="Delete" href="{{ route('client.delete', $client->id) }}" 
+                               <a title="Delete" href="" 
                                     class="btn btn-danger btn-sm" id="delete">
                                     <span class="mdi mdi-trash-can-outline mdi-18px"></span>
                         </a>
@@ -80,5 +80,6 @@
 
     </div> <!-- end container-fluid -->
 </div> <!-- end content -->
+
 
 @endsection

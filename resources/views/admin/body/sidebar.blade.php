@@ -185,6 +185,24 @@
                     </div>
                 </li>
 
+                  <!-- Casemaster Pages -->
+               <!-- Client Pages -->
+                <li>
+                    <a href="#case" data-bs-toggle="collapse">
+                        <i data-feather="file-text"></i>
+                        <span> Case Manage </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="case">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('case.all') }}" class="tp-link">All Case</a>
+                            </li>                                                
+                        </ul>
+                    </div>
+                </li>
+
+
                 <!-- Calendar -->
                 <li>
                     <a href="calendar.html" class="tp-link">

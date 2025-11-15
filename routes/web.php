@@ -6,11 +6,10 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CaseMasterController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\WareHouseController;
-
-
 
 Route::get('/', function () {
     return view('home.index');
@@ -126,4 +125,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/client/update', 'ClientUpdate')->name('client.update');
         Route::get('/client/delete/{id}', 'ClientDelete')->name('client.delete');
     });
+});
+
+//-- Casemaster All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(CaseMasterController::class)->group(function () { 
+        Route::get('/case/all', 'CaseAll')->name('case.all'); 
+        Route::get('/case/add', 'CaseAdd')->name('case.add');  
+        
+    });
+     //dynamic route
+        Route::get('/get-districts/{province}', [CaseMasterController::class, 'getDistricts']);
+        Route::get('/get-subdistricts/{district}', [CaseMasterController::class, 'getSubdistricts']);
+        Route::get('/get-zipcode/{subdistrict}', [CaseMasterController::class, 'getZipcode']);
+        Route::post('/client/store', [CaseMasterController::class, 'ClientStore'])->name('client.store');
 });
