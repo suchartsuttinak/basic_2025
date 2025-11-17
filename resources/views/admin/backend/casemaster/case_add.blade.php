@@ -185,6 +185,7 @@ $(document).ready(function () {
         });
     });
 
+
     $('#district').on('change', function () {
         let district_id = $(this).val();
         $.get('/get-subdistricts/' + district_id, function (data) {

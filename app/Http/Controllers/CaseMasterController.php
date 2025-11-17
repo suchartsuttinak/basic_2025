@@ -63,7 +63,7 @@ public function ClientStore(Request $request)
         'birth_date' => 'required|date',
         'email' => 'required|email',
         'sup_phone' => 'required|string|max:20',
-        'address' => 'required|string',
+        'address' => 'nullable|string',
         'province_id' => 'required|exists:provinces,id',
         'district_id' => 'required|exists:districts,id',
         'sub_district_id' => 'required|exists:sub_districts,id',

@@ -29,15 +29,15 @@
 
                 <!-- Dashboard -->
                 <li>
-                    <a href="#sidebarDashboards" data-bs-toggle="collapse">
+                    <a href="#sidebarRecipient" data-bs-toggle="collapse">
                      <i data-feather="home"></i>
-                        <span> Dashboard </span>
+                        <span> Case Master </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="sidebarDashboards">
+                    <div class="collapse" id="sidebarRecipient">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="index.html" class="tp-link">Analytical</a>
+                                <a href="{{ route('recipient.all') }}" class="tp-link">Recipient</a>
                             </li>
                             <li>
                                 <a href="ecommerce.html" class="tp-link">E-commerce</a>

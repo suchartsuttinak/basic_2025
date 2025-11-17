@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RecipientController;
 use App\Http\Controllers\CaseMasterController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SupplierController;
@@ -126,7 +127,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/client/delete/{id}', 'ClientDelete')->name('client.delete');
     });
 });
-
 //-- Casemaster All Route --//
 Route::middleware('auth')->group(function () {
     Route::controller(CaseMasterController::class)->group(function () { 
@@ -138,5 +138,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-districts/{province}', [CaseMasterController::class, 'getDistricts']);
         Route::get('/get-subdistricts/{district}', [CaseMasterController::class, 'getSubdistricts']);
         Route::get('/get-zipcode/{subdistrict}', [CaseMasterController::class, 'getZipcode']);
-        Route::post('/client/store', [CaseMasterController::class, 'ClientStore'])->name('client.store');
+        // Route::post('/client/store', [CaseMasterController::class, 'ClientStore'])->name('client.store');
+});
+
+
+//-- Recipient All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(RecipientController::class)->group(function () { 
+        Route::get('/recipient/all', 'RecipientAll')->name('recipient.all'); 
+        Route::get('/recipient/add', 'RecipientAdd')->name('recipient.add');
+        Route::post('/recipient/store', 'RecipientStore')->name('recipient.store');
+
+
+  
+        
+    });
+     //dynamic route
+        Route::get('/get-districts/{province}', [RecipientController::class, 'getDistricts']);
+        Route::get('/get-subdistricts/{district}', [RecipientController::class, 'getSubdistricts']);
+        Route::get('/get-zipcode/{subdistrict}', [RecipientController::class, 'getZipcode']);
+        // Route::post('/client/store', [RecipientController::class, 'ClientStore'])->name('client.store');
 });

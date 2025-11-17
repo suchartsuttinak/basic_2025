@@ -27,6 +27,7 @@ public function ClientAdd()
 
 public function ClientStore(Request $request)
 {
+
         // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมา
     $validated = $request->validate([
         'first_name' => 'required|string|max:255',
@@ -35,7 +36,6 @@ public function ClientStore(Request $request)
         'birth_date' => 'required|date',
         'address'    => 'required|string|max:500',
         'phone'      => 'required|string|max:20',
-        'email'      => 'nullable|email|max:255',
         'problems'   => 'array', // ต้องเป็น array ถ้ามี
     ]);
 
@@ -47,7 +47,6 @@ public function ClientStore(Request $request)
         'birth_date' => $validated['birth_date'],
         'address'    => $validated['address'],
         'phone'      => $validated['phone'],
-        'email'      => $validated['email'] ?? null,
     ]);
 
     // แนบปัญหาที่เลือกไว้ (many-to-many)
@@ -134,6 +133,3 @@ public function ClientDelete($id)
         
 }
 }
-
-
-

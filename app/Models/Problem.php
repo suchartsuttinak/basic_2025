@@ -20,4 +20,9 @@ class Problem extends Model
                 ->withPivot('note');
 }
 
+public function recipients()
+{
+    return $this->belongsToMany(Recipient::class, 'recipient_problem', 'problem_id', 'recipient_id');
+}
+
 }
