@@ -18,8 +18,12 @@ class Recipient extends Model
    ];
 
 
-    
-
+        
+    // Recipient.php (Model)
+    public function getGenderTextAttribute()
+    {
+        return $this->gender === 'male' ? 'ชาย' : 'หญิง';
+    }
 
 
     // ฟิลด์ที่เป็น date/datetime

@@ -10,16 +10,16 @@
                  </div>
 
         <div class="card-body">
-            <form action="{{ route('recipient.store') }}" method="POST">
+            <form action="{{ route('recipient.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-2 mb-3">
                     <label for="register_number" class="form-label">เลขทะเบียน</label>
                     <input type="text" name="register_number" class="form-control">
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                         <label for="title_name" class="form-label">คํานําหน้าชื่อ : 
                         <span class="text-danger">*</span></label>
                         <select name="title_name" class="form-select" required>
@@ -32,7 +32,7 @@
                     
                     
                     <!-- Gender redio button -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label d-block">เพศ : <span class="text-danger">*</span></label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gender" id="genderMale" 
@@ -48,33 +48,33 @@
                     </div>
                     <!--End Gender redio button -->
                     
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                             <label for="nick_name" class="form-label">ชื่อเล่น</label>
                             <input type="text" name="nick_name" class="form-control">
                         </div>
                     
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="first_name" class="form-label">ชื่อ : <span class="text-danger">*</span></label>
                         <input type="text" name="first_name" class="form-control" required>
                     </div>
                     
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="last_name" class="form-label">นามสกุล : <span class="text-danger">*</span></label>
                         <input type="text" name="last_name" class="form-control" required>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="id_card" class="form-label">เลขประจําตัวประชาชน</label>
                         <input type="text" name="id_card" class="form-control" required>
                     </div>
 
         
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="birth_date" class="form-label">วันเกิด</label>
                         <input type="date" name="birth_date" id="birth_date" class="form-control" required>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-4 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="formBasic">สัญชาติ : <span class="text-danger">*</span></label>
                             <select name="national_id" id="national_id" class="form-control form-select">
@@ -86,7 +86,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="formBasic">ศาสนา : <span class="text-danger">*</span></label>
                             <select name="religion_id" id="religion_id" class="form-control form-select">
@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="formBasic">สถานะ : <span class="text-danger">*</span></label>
                             <select name="marital_id" id="marital_id" class="form-control form-select">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="formBasic">อาชีพ : <span class="text-danger">*</span></label>
                             <select name="occupation_id" id="occupation_id" class="form-control form-select">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="formBasic">รายได้ : <span class="text-danger">*</span></label>
                             <select name="income_id" id="income_id" class="form-control form-select">
@@ -151,12 +151,12 @@
                         <input type="text" name="scholl" id="scholl" class="form-control" required>
                     </div>
 
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="address" class="form-label">ที่อยู่</label>
                         <input type="text" name="address" class="form-control" required>
                     </div>
 
-               <div class="col-md-6 mb-3">
+               <div class="col-md-4 mb-3">
                   <div class="form-group w-100">
                      <label class="form-label" for="formBasic">จังหวัด : <span class="text-danger">*</span></label>
                    <select name="province_id" id="province" class="form-control">
@@ -169,7 +169,7 @@
                   </div>
                </div>
 
-               <div class="col-md-6 mb-3">
+               <div class="col-md-4 mb-3">
                   <div class="form-group w-100">
                      <label class="form-label" for="formBasic">อำเภอ : <span class="text-danger">*</span></label>
                      <select name="district_id" id="district" class="form-control form-select">
@@ -178,27 +178,27 @@
                   </div>
                </div>
 
-               <div class="col-md-6 mb-3">
+               <div class="col-md-4 mb-3">
                   <div class="form-group w-100">
                      <label class="form-label" for="formBasic">ตําบล : <span class="text-danger">*</span></label>
-                  <select name="sub_disdrict_id" id="subdistrict" class="form-control form-select">
+                  <select name="sub_district_id" id="subdistrict" class="form-control form-select">
                         <option value="{{ old('subdistrict_id') }}">--เลือกตําบล--</option>
                        
                      </select>                   
                   </div>
                </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="zipcode" class="form-label">รหัสไปรษณีย์</label>
                         <input type="text" name="zipcode" id="zipcode" class="form-control">
                     </div>     
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-4 mb-3">
                         <label for="phone" class="form-label">โทรศัพท์</label>
                         <input type="text" name="phone" id="phone" class="form-control" required>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="target">กลุ่มเป้าหมาย : <span class="text-danger">*</span></label>
                             <select name="target_id" id="target_id" class="form-control form-select">
@@ -210,9 +210,9 @@
                         </div>
                     </div>  
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
-                            <label class="form-label" for="target">การติดต่อ : <span class="text-danger">*</span></label>
+                            <label class="form-label" for="target">วิธีการติดต่อ : <span class="text-danger">*</span></label>
                             <select name="contact_id" id="contact_id" class="form-control form-select">
                                 <option value="">--การติดต่อ--</option>
                                 @foreach ($contacts as $item)
@@ -222,7 +222,7 @@
                         </div>
                     </div>  
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="target">หน่วยงาน : <span class="text-danger">*</span></label>
                             <select name="project_id" id="project_id" class="form-control form-select">
@@ -234,9 +234,9 @@
                         </div>
                     </div>  
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
-                            <label class="form-label" for="target">สถานที่พัก : <span class="text-danger">*</span></label>
+                            <label class="form-label" for="target">สถานที่พักอาศัย : <span class="text-danger">*</span></label>
                             <select name="house_id" id="house_id" class="form-control form-select">
                                 <option value="">--สถานที่พัก--</option>
                                 @foreach ($houses as $item)
@@ -246,7 +246,7 @@
                         </div>
                     </div>  
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-4 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label" for="target">สถานะผู้เข้ารับ : <span class="text-danger">*</span></label>
                             <select name="status_id" id="status_id" class="form-control form-select">
@@ -258,45 +258,43 @@
                         </div>
                     </div>  
 
-                      <div class="col-md-6 mb-3">
+                      <div class="col-md-4 mb-3">
                         <label for="arrival_date" class="form-label">วันที่รับเข้า</label>
                         <input type="date" name="arrival_date" id="arrival_date" class="form-control">
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="case_resident" class="form-label">สถานะอยู่อาศัย</label>
                             <select name="case_resident" class="form-select" required>
                                 <option value="">-- เลือกสถานะ --</option>
                                 <option value="Active" selected>อยู่อาศัย</option>
                                 <option value="Inactive">ไม่อยู่อาศัย</option>
-                                <option value="Other">อื่น ๆ</option>
                             </select>
                         </div>
 
-                        <!-- Image -->
-                            <div class="col-md-6">
+                       <!-- Image -->
+                            <div class="col-md-4">
                                 <label for="image" class="form-label">อัปโหลดรูป</label>
-                              <input class="form-control" type="file"
-                                        name="image" id="image">
+                                <input class="form-control" type="file" name="image" id="image">
                             </div>
 
                             <div class="col-md-6">
                                 <label for="image" class="form-label">ภาพถ่าย</label>
-                                <img id="showImage" src="{{ !empty($profileData->image) ? url('upload/recipient /' 
-                                . $profileData->image) : url('upload/no_image.jpg') }}"
-                                class="rounded-circle avatar-xxl img-thumbnail float-start" alt="image profile">
+                                <img id="showImage" 
+                                    src="{{ !empty($profileData->image) ? asset($profileData->image) : asset('upload/no_image.jpg') }}"
+                                    class="rounded-circle avatar-xxl img-thumbnail float-start" alt="image profile">
                             </div>
-                        <!-- Image -->
+                            <!-- Image -->
 
                     <div class="col-md-12 mb-3">
-                        <label class="form-label">ปัญหาที่พบ <span class="text-danger">* (เลือกได้มากกว่า 1 ปัญหา)</span></label>
+                        <label class="form-label">ปัญหาที่พบ <span class="text-danger">* (เลือกได้มากกว่า 1 รายการ)</span></label>
                         <div class="row">
                             @foreach($problems as $problem)
                                 <div class="col-md-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" 
                                         name="problems[]" value="{{ $problem->id }}" id="problem{{ $problem->id }}">
-                                        <label class="form-check-label" for="problem{{ $problem->id }}">
+                                        <label  class="form-check-label" for="problem{{ $problem->id }}">
                                             {{ $problem->name }}
                                         </label>
                                     </div>

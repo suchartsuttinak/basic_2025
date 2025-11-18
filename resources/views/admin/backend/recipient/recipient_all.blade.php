@@ -45,11 +45,13 @@
 
                               <!-- ดึงภาพ -->
                              <td>
-                                <img src="{{ $recip->image ? asset($recip->image) : asset('upload/no_image.jpg') }}" 
-                                    style="height: 40px; width: 40px;">
+                               <img src="{{ $recip->image ? asset('upload/recipient_images/'.$recip->image) 
+                               : asset('upload/no_image.jpg') }}"
+                                style="height: 40px; width: 40px; object-fit: cover;">
                             </td>
                             <td>{{ $recip->first_name }} {{ $recip->last_name }}</td>
-                            <td>{{ ucfirst($recip->gender) }}</td>
+                             <td>{{ $recip->gender_text }}</td>
+
                             {{-- <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('d/m/Y') }}</td>> --}}
                             <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($recip->birth_date) }}</td>
                             <td>{{ $recip->address }}</td>
@@ -66,7 +68,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a title="Edit" href="" 
+                                <a title="Edit" href="{{ route('recipient.edit', $recip->id) }}" 
                                     class="btn btn-success btn-sm">
                                     <span class="mdi mdi-book-edit-outline mdi-18px"></span>
                                 </a>

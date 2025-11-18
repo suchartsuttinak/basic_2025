@@ -148,6 +148,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/recipient/all', 'RecipientAll')->name('recipient.all'); 
         Route::get('/recipient/add', 'RecipientAdd')->name('recipient.add');
         Route::post('/recipient/store', 'RecipientStore')->name('recipient.store');
+        Route::get('/recipient/edit/{id}', 'RecipientEdit')->name('recipient.edit');
 
 
   

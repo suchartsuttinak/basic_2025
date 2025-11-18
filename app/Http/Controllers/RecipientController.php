@@ -96,29 +96,30 @@ public function getZipcode($subdistrict_id)
 
 public function RecipientStore(Request $request)
 {     
+ 
   
   // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมา
     $validated = $request->validate([
         // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมา
-        'register_number' => 'required|string|max:255',
-        'nick_name' => 'required|string|max:255',
-        'title_name' => 'required|string|max:255',
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'gender' => 'required|string|max:255',
+        'register_number' => 'required|string|max:20',
+        'nick_name' => 'nullable|string|max:255',
+        'title_name' => 'required|string|max:20',
+        'first_name' => 'required|string|max:50',
+        'last_name' => 'required|string|max:50',
+        'gender' => 'required|string|max:10',
         'birth_date' => 'required|date',
-        'id_card' => 'required|string|max:13',
-        'national_id' => 'required|string|max:255',
-        'religion_id' => 'required|string|max:255',
-        'marital_id' => 'required|string|max:255',
-        'occupation_id' => 'nullable|string|max:255',
+        'id_card' => 'required|string|max:20',
+        'national_id' => 'required|string|max:20',
+        'religion_id' => 'required|string|max:20',
+        'marital_id' => 'required|string|max:50',
+        'occupation_id' => 'nullable|string|max:50',
         'income_id' => 'nullable|string|max:255',
         'education_id' => 'nullable|string|max:255',
         'scholl' => 'nullable|string|max:255',
         'address' => 'required|string|max:255',
         'province_id' => 'required|string|max:255',
         'district_id' => 'required|string|max:255',
-        'sub_disdrict_id' => 'required|string|max:255',
+        'sub_district_id' => 'required|string|max:255',
         'zipcode' => 'required|string|max:10',
         'phone' => 'required|string|max:20',
         'arrival_date' => 'required|date',
@@ -131,54 +132,73 @@ public function RecipientStore(Request $request)
         'problems' => 'nullable|array',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
+    
 
-    // สร้างข้อมูลผู้รับบริการ
-    $recipient = Recipient::create([
-        'register_number' => $validated['register_number'],
-        'title_name' => $validated['title_name'],
-        'nick_name' => $validated['nick_name'],
-        'first_name' => $validated['first_name'],
-        'last_name' => $validated['last_name'],
-        'gender' => $validated['gender'],
-        'birth_date' => $validated['birth_date'],
-        'id_card' => $validated['id_card'],
-        'national_id' => $validated['national_id'],
-        'religion_id' => $validated['religion_id'],
-        'marital_id' => $validated['marital_id'],
-        'occupation_id' => $validated['occupation_id'],
-        'income_id' => $validated['income_id'],
-        'education_id' => $validated['education_id'],
-        'scholl' => $validated['scholl'],
-        'address' => $validated['address'],
-        'province_id' => $validated['province_id'],
-        'district_id' => $validated['district_id'],
-        'sub_disdrict_id' => $validated['sub_disdrict_id'],
-        'zipcode' => $validated['zipcode'],
-        'phone' => $validated['phone'],
-        'arrival_date' => $validated['arrival_date'],
-        'target_id' => $validated['target_id'],
-        'contact_id' => $validated['contact_id'],
-        'project_id' => $validated['project_id'],
-        'house_id' => $validated['house_id'],
-        'status_id' => $validated['status_id'],
-        'case_resident' => $validated['case_resident'],
-        // 'image' => $save_url,
-    ]);
-
-   // แนบปัญหาที่เลือกไว้ (many-to-many)
-    if ($request->has('problems')) {
-        $recipient->problems()->attach($request->problems);
+     // จัดการไฟล์ภาพ
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('upload/recipient_images'), $filename);
+        $validated['image'] = $filename;
     }
-       $notification = [
-        'message' => 'Warehouse Inserted Successfully',
+
+    // ดึง problems ออกมาแยก
+    $problems = $validated['problems'] ?? [];
+    unset($validated['problems']);
+
+    // บันทึก Recipient
+    $recipient = Recipient::create($validated);
+
+    // แนบ problems (many-to-many)
+    if (!empty($problems)) {
+        $recipient->problems()->attach($problems);
+    }
+
+    $notification = [
+        'message' => 'Recipient Inserted Successfully',
         'alert-type' => 'success'
     ];
-  
-    // ส่งกลับพร้อมข้อความแจ้งเตือน
-     return redirect()->route('recipient.all')->with($notification);
+
+    return redirect()->route('recipient.all')->with($notification);
 }
 
+    public function RecipientEdit($id)
+    {
+        $recipient = Recipient::find($id);
+        $problems    = Problem::all();
+        $provinces   = Province::all();
+        $districts   = District::all();
+        $sub_districts= SubDistrict::all();
+        $nations     = National::all();
+        $religions   = Religion::all();
+        $maritals    = Marital::all();
+        $occupations = Occupation::all();
+        $incomes     = Income::all();
+        $educations  = Education::all();
+        $contacts    = Contact::all();
+        $projects    = Project::all();
+        $statuses    = Status::all();
+        $houses      = House::all(); 
+        $targets     = Target::all();
+
+        return view('admin.backend.recipient.recipient_edit', compact(
+            'recipient',
+            'problems',
+            'provinces',
+            'districts',
+            'sub_districts',
+            'nations',
+            'religions',
+            'maritals',
+            'occupations',
+            'incomes',
+            'educations',
+            'contacts',
+            'projects',
+            'statuses',
+            'houses',
+            'targets'
+        ));
+    }
+
 }
-
-
-
