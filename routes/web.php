@@ -149,14 +149,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/recipient/add', 'RecipientAdd')->name('recipient.add');
         Route::post('/recipient/store', 'RecipientStore')->name('recipient.store');
         Route::get('/recipient/edit/{id}', 'RecipientEdit')->name('recipient.edit');
-
-
-  
-        
+        Route::post('/recipient/update', 'RecipientUpdate')->name('recipient.update');
+        Route::get('/recipient/delete/{id}', 'RecipientDelete')->name('recipient.delete');      
     });
      //dynamic route
         Route::get('/get-districts/{province}', [RecipientController::class, 'getDistricts']);
         Route::get('/get-subdistricts/{district}', [RecipientController::class, 'getSubdistricts']);
-        Route::get('/get-zipcode/{subdistrict}', [RecipientController::class, 'getZipcode']);
-        // Route::post('/client/store', [RecipientController::class, 'ClientStore'])->name('client.store');
+        Route::get('/get-zipcode/{subdistrict}', [RecipientController::class, 'getZipcode']);     
 });

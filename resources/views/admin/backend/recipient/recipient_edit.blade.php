@@ -10,11 +10,13 @@
                  </div>
 
         <div class="card-body">
-            <form action="{{ route('recipient.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('recipient.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="row">
+                <!-- ส่ง id ไปด้วย -->
+                <input type="hidden" name="id" value="{{ $recipient->id }}">
 
-                <div class="col-md-2 mb-3">
+                <div class="row">
+                  <div class="col-md-2 mb-3">
                     <label for="register_number" class="form-label fw-bold">เลขทะเบียน</label>
                     <input type="text" name="register_number" id="register_number" 
                         class="form-control"
@@ -25,17 +27,25 @@
                     @enderror
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="title_name" class="form-label">คํานําหน้าชื่อ :
-                        <span class="text-danger">*</span>
-                    </label>
-                    <select name="title_name" class="form-select" required>
-                        <option value="">-- เลือกคํานําหน้าชื่อ --</option>
-                        <option value="Mr" {{ old('title_name', $recipient->title_name) == 'Mr' ? 'selected' : '' }}>นาย</option>
-                        <option value="Mrs" {{ old('title_name', $recipient->title_name) == 'Mrs' ? 'selected' : '' }}>นาง</option>
-                        <option value="Miss" {{ old('title_name', $recipient->title_name) == 'Miss' ? 'selected' : '' }}>นางสาว</option>
-                    </select>
-                </div>
+                <div class="col-md-6 mb-3">
+                        <div class="form-group w-100">
+                            <label class="form-label fw-bold" for="target_id">
+                                คำนำหน้าชื่อ : <span class="text-danger">*</span>
+                            </label>
+                            <select name="title_id" id="title_id" class="form-select" required>
+                                <option value="">-- เลือกคำนำหน้าชื่อ --</option>
+                                @foreach ($titles as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('title_id', $recipient->title_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->title_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('title_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>          
           
                     <!-- Gender radio button -->
                 <div class="col-md-4 mb-3">
@@ -513,26 +523,26 @@
     </div>
 </div>
 
-<!-- จังหวัด อำเภอ ตําบล รหัสไปรษณีย์ -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- จังหวัด อำเภอ ตําบล รหัสไปรษณีย์ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-$(document).ready(function () {
-    $('#province').on('change', function () {
-        let province_id = $(this).val();
-        console.log("Selected province ID:", province_id); // ✅ ตรวจค่าที่ส่ง
+    <script>
+    $(document).ready(function () {
+        $('#province').on('change', function () {
+            let province_id = $(this).val();
+            console.log("Selected province ID:", province_id); // ✅ ตรวจค่าที่ส่ง
 
-        $.get('/get-districts/' + province_id, function (data) {
-            console.log("Districts loaded:", data); // ✅ ตรวจ response
+            $.get('/get-districts/' + province_id, function (data) {
+                console.log("Districts loaded:", data); // ✅ ตรวจ response
 
-            $('#district').empty().append('<option value="">--เลือกอำเภอ--</option>');
-            $.each(data, function (key, value) {
-                $('#district').append('<option value="' + value.id + '">' + value.dist_name + '</option>');
+                $('#district').empty().append('<option value="">--เลือกอำเภอ--</option>');
+                $.each(data, function (key, value) {
+                    $('#district').append('<option value="' + value.id + '">' + value.dist_name + '</option>');
+                });
+                $('#subdistrict').empty().append('<option value="">--เลือกตำบล--</option>');
+                $('#zipcode').val('');
             });
-            $('#subdistrict').empty().append('<option value="">--เลือกตำบล--</option>');
-            $('#zipcode').val('');
         });
-    });
 
 
     $('#district').on('change', function () {
@@ -569,6 +579,161 @@ $(document).ready(function () {
             });
         </script>
         <!-- end show image -->
+
+        <!-- validation -->
+         <script type="text/javascript">
+    $(document).ready(function (){
+        $('#myForm').validate({
+            rules: {
+                register_number: {
+                    required : true,
+                }, 
+                title_id: {
+                    required : true,
+                }, 
+                gender: {
+                    required : true,
+                }, 
+                first_name: {
+                    required : true,
+                }, 
+                last_name: {
+                    required : true,
+                }, 
+                id_card: {
+                    required : true,
+                }, 
+                birth_date: {
+                    required : true,
+                }, 
+                national_id: {
+                    required : true,
+                }, 
+                religion_id: {
+                    required : true,
+                }, 
+                marital_id: {
+                    required : true,
+                }, 
+                occupation_id: {
+                    required : true,
+                }, 
+                income_id: {
+                    required : true,
+                }, 
+                education_id: {
+                    required : true,
+                }, 
+                province_id: {
+                    required : true,
+                }, 
+                district_id: {
+                    required : true,
+                }, 
+                sub_district_id: {
+                    required : true,
+                }, 
+                target_id: {
+                    required : true,
+                }, 
+                contact_id: {
+                    required : true,
+                }, 
+                project_id: {
+                    required : true,
+                }, 
+                house_id: {
+                    required : true,
+                }, 
+                status_id: {
+                    required : true,
+                }, 
+                arrival_date: {
+                    required : true,
+                }, 
+                problems: {
+                    required : true,
+                }, 
+            },
+            messages :{
+                 register_number: {
+                    required : 'กรุณากรอกเลขทะเบียน',
+                }, 
+                title_id: {
+                    required : 'กรุณากรอกคํานําหน้าชื่อ',
+                }, 
+                 gender: {
+                    required : 'กรุณาเลือกเพศ',
+                }, 
+                 first_name: {
+                    required : 'กรุณากรอกชื่อ',
+                }, 
+                 last_name: {
+                    required : 'กรุณากรอกนามสกุล',
+                }, 
+                 id_card: {
+                    required : 'กรุณากรอกเลขประจําตัวประชาชน',
+                }, 
+                 birth_date: {
+                    required : 'กรุณากรอกวันเกิด',
+                }, 
+                 national_id: {
+                    required : 'กรุณาเลือกสัญชาติ',
+                }, 
+                 marital_id: {
+                    required : 'กรุณาเลือกสถานภาพสมรส',
+                }, 
+                 occupation_id: {
+                    required : 'กรุณาเลือกอาชีพ',
+                }, 
+                 income_id: {
+                    required : 'กรุณาเลือกรายได้',
+                }, 
+                 education_id: {
+                    required : 'กรุณาเลือกการศึกษา',
+                }, 
+                 province_id: {
+                    required : 'กรุณาเลือกจังหวัด',
+                }, 
+                 district_id: {
+                    required : 'กรุณาเลือกอำเภอ',
+                }, 
+                 sub_district_id: {
+                    required : 'กรุณาเลือกตําบล',
+                }, 
+                 target_id: {
+                    required : 'กรุณาเลือกกลุ่มเป้าหมาย',
+                }, 
+                 contact_id: {
+                    required : 'กรุณาเลือกการติดต่อ',
+                }, 
+                 house_id: {
+                    required : 'กรุณาเลือกสถานที่พักอาศัย',
+                }, 
+                 status_id: {
+                    required : 'กรุณาเลือกสถานะ',
+                }, 
+                 arrival_date: {
+                    required : 'กรุณาเลือกวันที่รับเข้า',
+                }, 
+                 problems: {
+                    required : 'กรุณาเลือกปัญหา',
+                }, 
+            },
+            errorElement : 'span', 
+            errorPlacement: function (error,element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight : function(element, errorClass, validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight : function(element, errorClass, validClass){
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });  
+</script>
 
 @endsection
 

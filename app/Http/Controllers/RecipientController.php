@@ -21,6 +21,7 @@ use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Education;
+use App\Models\Title;
 
 // use Image;  
 use Intervention\Image\ImageManager;
@@ -40,7 +41,7 @@ class RecipientController extends Controller
         $problems    = Problem::all();
         $provinces   = Province::all();
         $districts   = District::all();
-        $subDistricts= SubDistrict::all();
+        $sub_districts = SubDistrict::all();
         $nations     = National::all();
         $religions   = Religion::all();
         $maritals    = Marital::all();
@@ -51,13 +52,14 @@ class RecipientController extends Controller
         $projects    = Project::all();
         $statuses    = Status::all();
         $houses      = House::all(); 
-        $targets     = Target::all();   
+        $targets     = Target::all(); 
+        $titles      = Title::all();  
         
         return view('admin.backend.recipient.recipient_create', compact(
             'problems',
             'provinces',
             'districts',
-            'subDistricts',
+            'sub_districts',
             'nations',
             'religions',
             'maritals',
@@ -68,7 +70,8 @@ class RecipientController extends Controller
             'projects',
             'statuses',
             'houses',
-            'targets'
+            'targets',
+            'titles'
         ));
     }
 
@@ -103,25 +106,25 @@ public function RecipientStore(Request $request)
         // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมา
         'register_number' => 'required|string|max:20',
         'nick_name' => 'nullable|string|max:255',
-        'title_name' => 'required|string|max:20',
+        'title_id' => 'required|string|max:20',
         'first_name' => 'required|string|max:50',
         'last_name' => 'required|string|max:50',
         'gender' => 'required|string|max:10',
         'birth_date' => 'required|date',
-        'id_card' => 'required|string|max:20',
+        'id_card' => 'required|unique:recipients,id_card',
         'national_id' => 'required|string|max:20',
         'religion_id' => 'required|string|max:20',
         'marital_id' => 'required|string|max:50',
-        'occupation_id' => 'nullable|string|max:50',
-        'income_id' => 'nullable|string|max:255',
+        'occupation_id' => 'required|string|max:50',
+        'income_id' => 'required|string|max:255',
         'education_id' => 'nullable|string|max:255',
         'scholl' => 'nullable|string|max:255',
-        'address' => 'required|string|max:255',
+        'address' => 'nullable|string|max:255',
         'province_id' => 'required|string|max:255',
         'district_id' => 'required|string|max:255',
         'sub_district_id' => 'required|string|max:255',
         'zipcode' => 'required|string|max:10',
-        'phone' => 'required|string|max:20',
+        'phone' => 'nullable|string|max:20',
         'arrival_date' => 'required|date',
         'target_id' => 'required|string|max:255',
         'contact_id' => 'required|string|max:255',
@@ -180,6 +183,9 @@ public function RecipientStore(Request $request)
         $statuses    = Status::all();
         $houses      = House::all(); 
         $targets     = Target::all();
+        $titles      = Title::all();
+
+    
 
         return view('admin.backend.recipient.recipient_edit', compact(
             'recipient',
@@ -197,8 +203,105 @@ public function RecipientStore(Request $request)
             'projects',
             'statuses',
             'houses',
-            'targets'
+            'targets',
+            'titles'
         ));
     }
 
-}
+    public function RecipientUpdate(Request $request)
+    {
+
+         // เก็บค่า id จาก request
+        $id = $request->id;
+
+    // ตรวจสอบ validation
+    $validated = $request->validate([
+        'register_number' => 'required|string|max:20',
+        'nick_name' => 'nullable|string|max:255',
+        'title_id' => 'required|string|max:50',
+        'first_name' => 'required|string|max:50',
+        'last_name' => 'required|string|max:50',
+        'gender' => 'required|string|max:10',
+        'birth_date' => 'required|date',
+        // 'id_card' 
+        'id_card' => 'required|unique:recipients,id_card,'.$id,
+        'national_id' => 'required|string|max:20',
+        'religion_id' => 'required|string|max:20',
+        'marital_id' => 'required|string|max:50',
+        'occupation_id' => 'required|string|max:50',
+        'income_id' => 'required|string|max:255',
+        'education_id' => 'nullable|string|max:255',
+        'scholl' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'province_id' => 'required|string|max:255',
+        'district_id' => 'required|string|max:255',
+        'sub_district_id' => 'required|string|max:255',
+        'zipcode' => 'required|string|max:10',
+        'phone' => 'nullable|string|max:20',
+        'arrival_date' => 'required|date',
+        'target_id' => 'required|string|max:255',
+        'contact_id' => 'required|string|max:255',
+        'project_id' => 'required|string|max:255',
+        'house_id' => 'required|string|max:255',
+        'status_id' => 'required|string|max:255',
+        'case_resident' => 'required|string|max:255',
+        'problems' => 'nullable|array',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    // จัดการไฟล์ภาพ
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('upload/recipient_images'), $filename);
+        $validated['image'] = $filename;
+    }
+
+    // ดึง problems ออกมาแยก
+    $problems = $validated['problems'] ?? [];
+    unset($validated['problems']);
+
+    // บันทึก Recipient
+    $recipient = Recipient::findOrFail($id);
+    $recipient->update($validated);
+
+    // แนบ problems (many-to-many) → sync ทุกครั้ง
+    $recipient->problems()->sync($problems);
+
+    $notification = [
+        'message' => 'Recipient Updated Successfully',
+        'alert-type' => 'success'
+    ];
+
+    return redirect()->route('recipient.all')->with($notification);  
+    }       
+    
+    public function RecipientDelete($id) 
+            {
+            // ดึงข้อมูล Recipient ถ้าไม่เจอจะ throw 404
+            $recipient = Recipient::findOrFail($id);
+
+            // ถ้ามีการแนบ problems (many-to-many) → ลบความสัมพันธ์ออกก่อน
+            $recipient->problems()->detach();
+
+            // ถ้ามีรูปภาพ → ลบไฟล์ออกจากโฟลเดอร์
+            if (!empty($recipient->image)) {
+                $imagePath = public_path('upload/recipient_images/' . $recipient->image);
+                if (file_exists($imagePath)) {
+                    @unlink($imagePath);
+                }
+            }
+
+            // ลบข้อมูล Recipient
+            $recipient->delete();
+
+            // แจ้งเตือน
+            $notification = [
+                'message' => 'Recipient Deleted Successfully',
+                'alert-type' => 'success'
+            ];
+
+            return redirect()->route('recipient.all')->with($notification);    
+            }
+        }
+

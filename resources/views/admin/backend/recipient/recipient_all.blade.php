@@ -30,8 +30,9 @@
                         <th>ลำดับ</th>
                         <th>ภาพ</th>
                         <th>ชื่อ-นามสกุล</th>
-                        <th>เพศ</th>
+                        <th>วันที่รับเข้า</th>
                         <th>วันเกิด</th>
+                        <th>อายุ</th>
                         <th>ที่อยู่</th>
                         <th>เบอร์โทร</th>
                         <th>ปัญหา</th>
@@ -49,11 +50,12 @@
                                : asset('upload/no_image.jpg') }}"
                                 style="height: 40px; width: 40px; object-fit: cover;">
                             </td>
-                            <td>{{ $recip->first_name }} {{ $recip->last_name }}</td>
-                             <td>{{ $recip->gender_text }}</td>
+                            <td>{{ $recip->full_name }}</td>
+                             <td>{{ $recip->arrival_date }}</td>
 
                             {{-- <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('d/m/Y') }}</td>> --}}
                             <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($recip->birth_date) }}</td>
+                               <td>{{ $recip->age }}</td>
                             <td>{{ $recip->address }}</td>
                             <td>{{ $recip->phone }}</td>
                             <td>
@@ -72,7 +74,7 @@
                                     class="btn btn-success btn-sm">
                                     <span class="mdi mdi-book-edit-outline mdi-18px"></span>
                                 </a>
-                               <a title="Delete" href="" 
+                               <a title="Delete" href="{{ route('recipient.delete', $recip->id) }}" 
                                     class="btn btn-danger btn-sm" id="delete">
                                     <span class="mdi mdi-trash-can-outline mdi-18px"></span>
                         </a>
