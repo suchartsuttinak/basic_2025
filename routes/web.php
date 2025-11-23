@@ -9,8 +9,12 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RecipientController;
 use App\Http\Controllers\CaseMasterController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Frontend\ChildController;
+use App\Http\Controllers\frontend\RemarkController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\WareHouseController;
+use App\Http\Controllers\Frontend\FactFindingController;
+use App\Http\Controllers\Frontend\FactFindingMasterController;
 
 Route::get('/', function () {
     return view('home.index');
@@ -157,3 +161,49 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-subdistricts/{district}', [RecipientController::class, 'getSubdistricts']);
         Route::get('/get-zipcode/{subdistrict}', [RecipientController::class, 'getZipcode']);     
 });
+
+//-- Child All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(ChildController::class)->group(function () { 
+        Route::get('/all/child/{id}', 'AllChild')->name('all.child'); 
+       
+    });
+});
+
+//-- Fact_Finding All Route --//
+Route::middleware('auth')->group(function () {
+    Route::controller(FactFindingController::class)->group(function () { 
+        Route::get('/fact/all/{id}', 'FactAll')->name('fact.all'); 
+       
+    });
+});
+
+
+///-- Remark Routes --//
+Route::middleware('auth')->group(function () {
+    Route::controller(RemarkController::class)->group(function () {
+        // แสดงรายการ Remark ทั้งหมด
+        Route::get('/remark/all/{id}', 'RemarkAll')->name('remark.all');
+
+        // ฟอร์มเพิ่ม Remark
+        Route::get('/remark/add/{id}', 'RemarkAdd')->name('remark.add');
+
+        // บันทึก Remark
+        Route::post('/remark/store', 'StoreRemark')->name('store.remark'); // ✅ ตรงกับที่เรียก
+    });
+});
+
+///-- Remark Routes --//
+Route::middleware('auth')->group(function () {
+    Route::controller(FactFindingMasterController::class)->group(function () {
+        // แสดงรายการ Remark ทั้งหมด
+        Route::get('/factmaster/all/{id}', 'FactMasterAll')->name('factmaster.all');
+
+        // ฟอร์มเพิ่ม factmaster
+        Route::get('/factmaster/add/{id}', 'FactMasterAdd')->name('factmaster.add');
+
+        
+    });
+});
+
+

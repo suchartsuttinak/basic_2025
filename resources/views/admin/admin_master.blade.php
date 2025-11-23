@@ -26,12 +26,20 @@
 
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
+        <!-- Kanit Fonts --> 
+        <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+
+
     </head>
 
     <!-- body start -->
     <body data-menu-color="light" data-sidebar="default">
 
-        <!-- Begin page -->
+    <!-- Kanit Fonts --> 
+    <style>body {font-family: 'Kanit', sans-serif;}</style
+
+
+        <!-- Begin page --> 
         <div id="app-layout">
 
 
@@ -64,6 +72,9 @@
 
         </div>
 
+
+
+        
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- END wrapper -->

@@ -259,24 +259,6 @@
                     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
-
                    <div class="col-md-4 mb-3">
                             <label for="zipcode" class="form-label">รหัสไปรษณีย์</label>
                             <input type="text" name="zipcode" id="zipcode" 

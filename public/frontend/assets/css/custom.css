@@ -1,0 +1,236 @@
+/* ✅ Base font size */
+html {
+  font-size: 18px; /* เพิ่มจาก 14px → 15px */
+}
+
+
+
+body {
+  font-family: "Noto Sans Thai", 'Kanit', "Prompt", sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+  background-color: #fff;
+}
+
+/* ✅ ปรับขนาดปุ่มเล็ก */
+button.btn-sm {
+  font-size: 13px !important;
+  padding: 6px 14px !important;   /* ปรับ padding ให้สมดุล */
+  border-radius: 6px;             /* มุมโค้งสวยงาม */
+  min-width: 60px;                /* กำหนดความกว้างขั้นต่ำ */
+  min-height: 20px;               /* กำหนดความสูงขั้นต่ำ */
+  transition: all 0.2s ease-in-out; /* เพิ่มเอฟเฟกต์เวลา hover */
+}
+
+/* ✅ เอฟเฟกต์ hover */
+button.btn-sm:hover {
+  background-color: #0d6efd;  /* สีหลัก Bootstrap */
+  color: #fff;
+  transform: scale(1.05);     /* ขยายเล็กน้อยเวลา hover */
+}
+
+
+button.btn-xs {
+  font-size: 0.75rem !important;
+  padding: 0.25rem 0.5rem !important;
+  line-height: 1.2 !important;
+  border-radius: 0.2rem !important;
+}
+
+/* เพิ่ม btn-icon */
+.btn-icon {
+  padding: 4px;    /* เพิ่ม padding เล็กน้อยให้คลิกง่าย */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  line-height: 1;
+  width: auto;  /* ให้ความกว้างปรับตามเนื้อหา */
+  min-width: 28px;   /* ป้องกันปุ่มเล็กเกินไป */
+  height: 32px;   /* ความสูงคงที่ */
+}
+.btn-icon .mdi {
+  font-size: 18px;
+  line-height: 1;
+}
+/* สิ้นสุด btn-icon */
+
+/* ✅ ปรับขนาด input */
+.form-control {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.6rem;
+}
+
+
+
+.table td, .table th {
+  padding: 0.5rem 0.6rem;
+  white-space: nowrap;
+}
+
+.table {
+  font-size: 0.75rem; /* เล็กลงจาก 0.85rem */
+}
+
+.table td, .table th {
+  padding: 0.3rem 0.4rem; /* ลดระยะห่างใน cell */
+}
+
+
+
+/* ✅ ปรับ layout content-page ให้เต็มจอ */
+.content-page {
+  max-width: none;
+  width: 100%;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+/* ✅ สำหรับ section หรือ background เต็มจอ */
+.fullscreen-bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('...');
+  background-size: cover;
+  background-position: center;
+}
+
+.fullscreen-section {
+  width: 100vw;
+  height: 100vh;
+}
+
+.content {
+  width: 98vw;
+}
+body {
+  font-family: 'Kanit', sans-serif;
+  font-size: 12px; /* ลดจาก 15px หรือ 14px → เห็นผลชัดเจน */
+  line-height: 1.5;
+}
+
+.btn-xxs {
+  font-size: 0.65rem !important;   /* เล็กกว่า btn-xs */
+  padding: 0.15rem 0.3rem !important; /* ลดทั้งความสูงและความกว้าง */
+  line-height: 1 !important;       /* ลดความสูงของปุ่ม */
+  border-radius: 0.15rem !important; /* มุมโค้งเล็กลง */
+}
+
+
+/* ✅ ปรับความสูงของ input search ให้พอดี */
+input[type="search"] {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 2px 10px;         /* ลด padding ด้านบน-ล่าง */
+  font-size: 13px;
+  line-height: 1.2;          /* ลดระยะห่างบรรทัด */
+  height: 40px;              /* กำหนดความสูงโดยตรง */
+  background-color: #fff;
+  color: #212529;
+  width: 200px;              /* ความกว้างพอดี */
+}
+
+input.form-control {
+  /* ค่า default ของ Bootstrap 5 */
+  border: 1px solid #ced4da; /* ค่า default ของ Bootstrap */
+  height: 40px;              /* กำหนดความสูงโดยตรง */
+  padding: 2px 10px;         /* ลด padding ด้านบน-ล่าง */
+  font-size: 12px;
+  line-height: 1.2;          /* ลดระยะห่างบรรทัด */
+  border-radius: 6px;
+  background-color: #fff;
+  color: #212529; 
+}
+/* Checkbox สี่เหลี่ยมพื้นผ้า */
+.custom-checkbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 2.2em;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 1.4em;
+  height: 0.9em;
+  border: 1px solid #ced4da;
+  border-radius: 0.2em;
+  background-color: #fff;
+  appearance: none;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 0.5em;
+  top: 0.3em;
+  width: 0.4em;
+  height: 0.6em;
+  border: solid #fff;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+}
+
+/* กลมจริง ไม่มีพื้นหลัง */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 2px solid #0d6efd;
+  border-radius: 50% !important;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #0d6efd;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+/* เครื่องหมายถูกเมื่อ checked */
+input[type="radio"]::before {
+  content: "✓";
+  position: absolute;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #0d6efd;
+  transform: scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+
+/* โฟกัส */
+input[type="radio"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+
+/* ปรับระยะห่างระหว่าง radio กับ label */
+.form-check-input[type="radio"] {
+  border-radius: 50% !important;     /* กลมแน่นอน */
+  width: 0.5.rem;
+  height: 0.5.rem;
+  margin-right: 0.5rem;              /* ระยะห่างกับ label */
+  accent-color: #0d6efd;             /* สีตามธีม Bootstrap */
+  vertical-align: middle;
+}
+.form-check-label {
+  vertical-align: middle;
+}

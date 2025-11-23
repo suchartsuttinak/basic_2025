@@ -78,6 +78,11 @@
                                     class="btn btn-danger btn-sm" id="delete">
                                     <span class="mdi mdi-trash-can-outline mdi-18px"></span>
                         </a>
+                               <a title="add" href="{{ route('all.child', $recip->id) }}" 
+                                    class="btn btn-primary btn-sm">
+                                     <span class="mdi mdi-eye-circle mdi-18px"></span></a>
+
+                        </a>
                             </td>
                         </tr>
                     @endforeach

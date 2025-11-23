@@ -108,8 +108,14 @@ class Recipient extends Model
 
          return $this->belongsToMany(Problem::class, 'recipient_problem', 'recipient_id', 'problem_id');
 
-
     }
+
+    public function factfinding()
+    {
+        return $this->hasOne(Factfinding::class);
+    }
+
+
 
 
 }

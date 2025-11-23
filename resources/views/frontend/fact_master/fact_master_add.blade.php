@@ -1,0 +1,263 @@
+@extends('frontend.main.main_recipient')
+@section('content')
+ 
+   <div class="d-flex justify-content-end">
+  <div class="container-fluid" style="max-width: 1600px;">
+
+
+  <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+    <div class="flex-grow-1">
+      <h5 class="fs-18 fw-semibold m-0">บักทึกการสอบข้อเท็จจริงเบื้องต้น</h5>
+    </div>
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+        <li class="breadcrumb-item active">Form Validation</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Form Validation -->
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+       
+
+        <div class="card-body">
+          <form id="myForm" action="" method="POST" class="row g-3">
+            @csrf
+
+            <!-- ส่ง id ไปด้วย -->
+            <input type="hidden" name="recipient_id" value="{{$recipients->id}}">
+            <!-- วันที่ -->
+
+                <div class="row pt-4">
+                    <div class="form-group col-md-2 mb-3">
+                        <label for="arrival_date" class="form-label">วันที่บันทึก</label>
+                        <input type="date" name="date" id="date"
+                            class="form-control"
+                            value="{{ old('date') }}">
+                        @error('date')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                      <div class="form-group col-md-3 mb-3">
+                        <label for="fact_name" class="form-label">ชื่อผู้นำส่ง</label>
+                        <input type="text" name="fact_name" class="form-control" required
+                            value="{{ old('fact_name') }}">
+                        @error('fact_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
+
+                <div class="row">
+                  
+                    <div class="form-group col-md-4 mb-3">
+                        <label for="appearance" class="form-label">รูปพรรณสัณฐาน</label>
+                        <input type="text" name="appearance" class="form-control" required
+                            value="{{ old('appearance') }}">
+                        @error('appearance')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4 mb-3">
+                        <label for="skin" class="form-label">สีผิว</label>
+                        <input type="text" name="skin" class="form-control" required
+                            value="{{ old('skin') }}">
+                        @error('skin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4 mb-3">
+                        <label for="scar" class="form-label">ตำหนิ/แผลเป็น</label>
+                        <input type="text" name="scar" class="form-control" required
+                            value="{{ old('scar') }}">
+                        @error('scar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                    <div class="row">
+                        <!-- ลักษณะความพิการ -->
+                        <div class="form-group col-md-4 mb-3">
+                            <label for="disability" class="form-label">ลักษณะความพิการ</label>
+                            <input type="text" name="disability" class="form-control" required value="{{ old('disability') }}">
+                            @error('disability')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    <!-- Sick radio button -->
+                    <div class="form-group col-md-2 mb-3">
+                        <label class="form-label d-block">ประวัติการเจ็บป่วย : <span class="text-danger">*</span></label>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sick" id="sickYes"
+                            value="Yes" {{ old('sick') == 'Yes' ? 'checked' : '' }} required>
+                        <label class="form-check-label" for="sickYes">มี</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sick" id="sickNo"
+                            value="No" {{ old('sick') == 'No' ? 'checked' : '' }} required>
+                        <label class="form-check-label" for="sickNo">ไม่มี</label>
+                        </div>
+                    </div>
+
+                    <!-- รายละเอียดการรักษา (แสดงเมื่อ sick = Yes) -->
+                    <div class="form-group col-md-6 mb-3" id="sickDetailGroup" style="display: none;">
+                        <label for="sick_detail" class="form-label">รายละเอียดการเจ็บป่วย</label>
+                        <textarea name="evidence" id="evidence"
+                        class="form-control bg-white border rounded shadow-sm"
+                        rows="2" required></textarea> 
+                    </div> 
+
+                       <div class="form-group col-md-6 mb-3">
+                            <label for="treatment" class="form-label">การรักษาพยาบาล</label>
+                            <input type="text" name="treatment" class="form-control" required value="{{ old('treatment') }}">
+                            @error('treatment')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                         <div class="form-group col-md-4 mb-3">
+                            <label for="hospital" class="form-label">โรงพยาบาล</label>
+                            <input type="text" name="hospital" class="form-control" required value="{{ old('hospital') }}">
+                            @error('hospital')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>      
+                 </div>
+
+                  <div class="row">
+                       <div class="form-group col-md-2 mb-3">
+                            <label for="weight" class="form-label">น้ำหนัก</label>
+                            <div class="d-flex align-items-center">
+                                <input type="text" name="weight" id="weight" class="form-control" required value="{{ old('weight') }}">
+                                <span class="ms-2">กิโลกรัม</span>
+                            </div>
+                            @error('weight')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                     </div>
+
+                       <div class="form-group col-md-2 mb-3">
+                            <label for="height" class="form-label">ส่วนสูง</label>
+                            <div class="d-flex align-items-center">
+                                <input type="text" name="height" id="height" class="form-control" required value="{{ old('height') }}">
+                                <span class="ms-2">เซนติเมตร</span>
+                            </div>
+                            @error('height')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                     </div>
+
+                      <div class="form-group col-md-8 mb-3">
+                            <label for="hygiene" class="form-label">ความสะอาดร่างกาย</label>
+                            <input type="text" name="hygiene" class="form-control" required value="{{ old('hygiene') }}">
+                            @error('hygiene')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>    
+
+                      <div class="form-group col-md-6 mb-3">
+                            <label for="oral_health" class="form-label">สุขภาพช่องปาก</label>
+                            <input type="text" name="oral_health" class="form-control" required value="{{ old('oral_health') }}">
+                            @error('oral_health')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>  
+
+                      <div class="form-group col-md-6 mb-3">
+                            <label for="injury" class="form-label">การบาดเจ็บ/บาดแผล</label>
+                            <input type="text" name="injury" class="form-control" required value="{{ old('injury') }}">
+                            @error('injury')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>  
+                  </div>
+                   
+                  <div class="row">
+                            <div class="form-group col-md-12 mb-3">
+                        <label for="case_history" class="form-label">ประวัติความเป็นมา</label>
+                        <textarea name="case_history" id="case_history"
+                                    class="form-control bg-white border rounded shadow-sm"
+                                    rows="2"  required></textarea>
+                        </div>  
+
+                         <div class="form-group col-md-3 mb-3">
+                            <label for="recorder" class="form-label">ผู้บันทึก</label>
+                            <input type="text" name="recorder" class="form-control" required value="{{ old('recorder') }}">
+                            @error('recorder')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror   
+                        </div>  
+
+                </div>
+                            
+             <div class="col-md-12 mb-3">
+                    <label class="form-label fw-bold text-dark">
+                        เอกสารที่เกี่ยวข้อง <span class="text-danger">* (เลือกได้มากกว่า 1 รายการ)</span>
+                    </label>
+
+                    <div class="row">
+                        @foreach($documents as $document)
+                            <div class="col-md-6 col-lg-4">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox"
+                                        name="documents[]"
+                                        value="{{ $document->id }}"
+                                        id="document{{ $document->id }}">
+                                    {{ $document->document_name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            <!-- ปุ่ม -->
+            <div class="col-12">
+              <button class="btn btn-primary btn-lg px-4 py-2  fw-semibold shadow-sm" type="submit">
+                บันทึก
+              </button>
+            </div>
+          </form>
+        </div> <!-- end card-body -->
+      </div> <!-- end card -->
+    </div> <!-- end col -->
+  </div> <!-- end row -->
+</div> <!-- end container-fluid -->
+</div>
+
+
+<!-- ประวัติการรักษาพยาบาล -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sickYes = document.getElementById('sickYes');
+            const sickNo = document.getElementById('sickNo');
+            const sickDetailGroup = document.getElementById('sickDetailGroup');
+
+            function toggleSickDetail() {
+            if (sickYes.checked) {
+                sickDetailGroup.style.display = 'block';
+            } else {
+                sickDetailGroup.style.display = 'none';
+            }
+            }
+            // เรียกเมื่อโหลดหน้า
+            toggleSickDetail();
+
+            // เรียกเมื่อมีการเปลี่ยนค่า
+            sickYes.addEventListener('change', toggleSickDetail);
+            sickNo.addEventListener('change', toggleSickDetail);
+        });
+        </script> 
+
+
+
+
+
+@endsection
