@@ -24,12 +24,11 @@
        
 
         <div class="card-body">
-          <form id="myForm" action="" method="POST" class="row g-3">
+          <form action="{{ route('factmaster.store') }}" method="POST" class="row g-3">
             @csrf
-
             <!-- ส่ง id ไปด้วย -->
             <input type="hidden" name="recipient_id" value="{{$recipients->id}}">
-            <!-- วันที่ -->
+          
 
                 <div class="row pt-4">
                     <div class="form-group col-md-2 mb-3">
@@ -111,7 +110,7 @@
                     <!-- รายละเอียดการรักษา (แสดงเมื่อ sick = Yes) -->
                     <div class="form-group col-md-6 mb-3" id="sickDetailGroup" style="display: none;">
                         <label for="sick_detail" class="form-label">รายละเอียดการเจ็บป่วย</label>
-                        <textarea name="evidence" id="evidence"
+                        <textarea name="sick_detail" id="sick_detail"
                         class="form-control bg-white border rounded shadow-sm"
                         rows="2" required></textarea> 
                     </div> 
@@ -197,6 +196,14 @@
                             @enderror   
                         </div>  
 
+                         <div class="form-group col-md-3 mb-3">
+                            <label for="evidence" class="form-label">เอกสารเพิ่มเติม</label>
+                            <input type="text" name="evidence" class="form-control" required value="{{ old('evidence') }}">
+                            @error('evidence')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror   
+                        </div>  
+
                 </div>
                             
              <div class="col-md-12 mb-3">
@@ -255,9 +262,4 @@
             sickNo.addEventListener('change', toggleSickDetail);
         });
         </script> 
-
-
-
-
-
 @endsection

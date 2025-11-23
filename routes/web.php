@@ -196,14 +196,16 @@ Route::middleware('auth')->group(function () {
 ///-- Remark Routes --//
 Route::middleware('auth')->group(function () {
     Route::controller(FactFindingMasterController::class)->group(function () {
-        // แสดงรายการ Remark ทั้งหมด
+      
         Route::get('/factmaster/all/{id}', 'FactMasterAll')->name('factmaster.all');
 
-        // ฟอร์มเพิ่ม factmaster
+   
         Route::get('/factmaster/add/{id}', 'FactMasterAdd')->name('factmaster.add');
 
-        
+ 
+        Route::post('/factmaster/store', 'FactMasterStore')->name('factmaster.store');
     });
 });
+
 
 

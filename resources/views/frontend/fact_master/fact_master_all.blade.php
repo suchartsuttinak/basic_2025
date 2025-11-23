@@ -9,9 +9,9 @@
              <h6 class="fs-18 text-black">{{ $recipients->full_name }}: อายุ {{ $recipients->age}} ปี </h6>
          </div>
             <div class="text-end">
-                <ol class="breadcrumb m-0 py-0">
+                  <ol class="breadcrumb m-0 py-0">
                     <a href="{{ route('factmaster.add', $recipients->id) }}" class="btn btn-primary">เพิ่มข้อมูล</a>
-                </ol>
+                </ol>   
             </div>
         </div>
 
