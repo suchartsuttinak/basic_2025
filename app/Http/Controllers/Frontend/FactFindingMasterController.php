@@ -145,6 +145,20 @@ public function FactMasterStore(Request $request)
         'documents.*' => 'integer',
     ]);
 
+    // ✅ 2. ดึงข้อมูล Recipient จากฐานข้อมูล
+        $recipients = Recipient::findOrFail($validated['recipient_id']);
+
+        // 3. บันทึกข้อมูล factfinding
+        $factFinding = Factfinding::updateOrCreate(
+            ['recipient_id' => $validated['recipient_id']],
+            [ /* ข้อมูลอื่น ๆ */ ]
+        );
+
+
+
+
+
+
     // เตรียม payload ให้ตรงชนิดข้อมูลและค่า default
     $payload = [
         'date' => $validated['date'],
@@ -166,8 +180,6 @@ public function FactMasterStore(Request $request)
         'case_history' => $validated['case_history'] ?? '',
         'recorder' => $validated['recorder'] ?? '',
         'active' => $validated['active'] ?? 1, // ค่า default เป็น 1
-
-
     ];
 
     // บันทึกข้อมูลหลักแบบ one-to-one
@@ -192,9 +204,12 @@ public function FactMasterStore(Request $request)
     $documents = \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)
         ->pluck('document_id');
 
-    return view('frontend.fact_master.fact_master_show', [
+    return view('frontend.fact_master.fact_master_all', [
         'factFinding' => $factFinding,
         'documents' => $documents,
+       'recipients' => $recipients,
+
+
     ]);
 }
 }
