@@ -193,10 +193,11 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-///-- Remark Routes --//
+////-- Remark Routes --//
 Route::middleware('auth')->group(function () {
     Route::controller(FactFindingMasterController::class)->group(function () {
-      
+
+        // แสดงข้อมูลทั้งหมดของ factfinding สำหรับ recipient
         Route::get('/factmaster/all/{id}', 'FactMasterAll')->name('factmaster.all');
 
    
@@ -205,7 +206,13 @@ Route::middleware('auth')->group(function () {
  
         Route::post('/factmaster/store', 'FactMasterStore')->name('factmaster.store');
     });
-});
+        // // ✅ เพิ่ม route สำหรับแก้ไข
+        // Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');
+
+        // // ✅ เพิ่ม route สำหรับบันทึกการแก้ไข
+        // Route::put('/factmaster/update/{id}', 'FactMasterUpdate')->name('factmaster.update');
+    });
+
 
 
 

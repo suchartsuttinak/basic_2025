@@ -1,7 +1,6 @@
 @extends('frontend.main.main_recipient')
 @section('content')
 
-
 @if(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
@@ -34,10 +33,12 @@
        
 
         <div class="card-body">
-          <form action="{{ route('factmaster.store') }}" method="POST" class="row g-3">
-            @csrf
+         <form action="{{ route('factmaster.update', $recipients->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
             <!-- ส่ง id ไปด้วย -->
-            <input type="hidden" name="recipient_id" value="{{$recipients->id}}">
+            {{-- <input type="hidden" name="recipient_id" value="{{$recipients->id}}"> --}}
           
 
                 <div class="row pt-4">
@@ -248,7 +249,6 @@
   </div> <!-- end row -->
 </div> <!-- end container-fluid -->
 </div>
-
 
 <!-- ประวัติการรักษาพยาบาล -->
         <script>

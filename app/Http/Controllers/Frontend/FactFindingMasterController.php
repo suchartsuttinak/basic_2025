@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Recipient;
+use App\Models\Factfinding;
 use Illuminate\Http\Request;
-use App\Models\frontend\Document;
-use App\Http\Controllers\Controller;
-use App\Models\frontend\Factfinding;
 use App\Models\FactFindingDocument;
+use App\Http\Controllers\Controller;
+use App\Models\Document;
 
 class FactFindingMasterController extends Controller
 {
@@ -119,14 +119,11 @@ public function FactMasterStore(Request $request)
         'disability' => 'nullable|string',
         'evidence' => 'nullable|string',
 
-        // sick เป็น ENUM: yes/no
         'sick' => 'nullable|in:yes,no,YES,NO,Yes,No',
-
         'sick_detail' => 'nullable|string',
         'treatment' => 'nullable|string',
         'hospital' => 'nullable|string',
 
-        // แนะนำให้เป็น numeric เพื่อ cast ถูกต้อง
         'weight' => 'nullable|numeric',
         'height' => 'nullable|numeric',
 
@@ -136,32 +133,18 @@ public function FactMasterStore(Request $request)
         'case_history' => 'nullable|string',
         'recorder' => 'nullable|string',
 
-        // ถ้ามี activity ด้วย
-         'active' => 'nullable|boolean',
-
-
+        'active' => 'nullable|boolean',
 
         'documents' => 'nullable|array',
         'documents.*' => 'integer',
     ]);
 
-    // ✅ 2. ดึงข้อมูล Recipient จากฐานข้อมูล
-        $recipients = Recipient::findOrFail($validated['recipient_id']);
+    // ✅ ดึงข้อมูล Recipient
+    $recipients = Recipient::findOrFail($validated['recipient_id']);
 
-        // 3. บันทึกข้อมูล factfinding
-        $factFinding = Factfinding::updateOrCreate(
-            ['recipient_id' => $validated['recipient_id']],
-            [ /* ข้อมูลอื่น ๆ */ ]
-        );
-
-
-
-
-
-
-    // เตรียม payload ให้ตรงชนิดข้อมูลและค่า default
+    // ✅ เตรียม payload ให้ครบ
     $payload = [
-        'date' => $validated['date'],
+        'date' => $validated['date'] ?? now()->toDateString(),
         'fact_name' => $validated['fact_name'],
         'appearance' => $validated['appearance'] ?? 'ไม่ระบุ',
         'skin' => $validated['skin'] ?? 'ไม่ระบุ',
@@ -179,37 +162,38 @@ public function FactMasterStore(Request $request)
         'injury' => $validated['injury'] ?? 'ไม่ระบุ',
         'case_history' => $validated['case_history'] ?? '',
         'recorder' => $validated['recorder'] ?? '',
-        'active' => $validated['active'] ?? 1, // ค่า default เป็น 1
+        'active' => $validated['active'] ?? 1,
     ];
 
-    // บันทึกข้อมูลหลักแบบ one-to-one
+    // ✅ ส่ง payload เข้าไปใน updateOrCreate
     $factFinding = Factfinding::updateOrCreate(
         ['recipient_id' => (int)$validated['recipient_id']],
         $payload
     );
 
-    // ลบ documents เดิมก่อน แล้วเพิ่มใหม่
-    \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
+    // ✅ ลบ documents เดิมก่อน แล้วเพิ่มใหม่
+   // ✅ ลบ documents เดิมก่อน แล้วเพิ่มใหม่
+\App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
 
-    if (!empty($validated['documents'])) {
-        foreach ($validated['documents'] as $docId) {
-            \App\Models\FactFindingDocument::create([
-                'factfinding_id' => $factFinding->id,
-                'document_id' => (int)$docId,
-            ]);
-        }
+if (!empty($validated['documents'])) {
+    foreach ($validated['documents'] as $docId) {
+        \App\Models\FactFindingDocument::create([
+            'factfinding_id' => $factFinding->id,
+            'document_id'    => (int)$docId,
+        ]);
     }
+}
 
-    // ดึง documents ที่สัมพันธ์กับ factFinding
-    $documents = \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)
-        ->pluck('document_id');
+// ✅ ดึง documents พร้อม relation "document"
+$documents = \App\Models\FactFindingDocument::with('document')
+    ->where('factfinding_id', $factFinding->id)
+    ->get();
 
-    return view('frontend.fact_master.fact_master_all', [
-        'factFinding' => $factFinding,
-        'documents' => $documents,
-       'recipients' => $recipients,
+return view('frontend.fact_master.fact_master_all', [
+    'factFinding' => $factFinding,
+    'documents'   => $documents,   // ตอน loop ใน blade ใช้ $doc->document->ชื่อฟิลด์
+    'recipients'  => $recipients,
+]);
 
-
-    ]);
 }
 }

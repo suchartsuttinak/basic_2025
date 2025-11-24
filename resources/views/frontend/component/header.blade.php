@@ -168,14 +168,15 @@
                         ประวัติ
                       </a>
                     </li>
+                  
                     <li>
                       <a href="{{ route('remark.all', $recipients->id) }}">
-                        ติดตามผลการดำเนินงาน
+                        รายงานสอบข้อเท็จจริง
                       </a>
                     </li>
                     <li>
-                      <a href="{{ route('factmaster.all', $recipients->id) }}">
-                        สอบข้อเท็จจริงเบื้องต้น
+                      <a href="{{ route('factmaster.add', $recipients->id) }}">
+                        บันทึกสอบข้อเท็จจริง
                       </a>
                     </li>
                   </ul>

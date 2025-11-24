@@ -9,20 +9,19 @@ class FactFindingDocument extends Model
 {
     use HasFactory;
 
-    // ✅ ใช้ชื่อตารางจริง
-    protected $table = 'document_factfinding';
+    protected $table = 'document_factfinding'; // ✅ ให้ตรงกับ DB
 
-    protected $fillable = [
-        'factfinding_id',
-        'document_id',
-    ];
+    protected $fillable = ['factfinding_id', 'document_id'];
+
+    public function document()
+    {
+        return $this->belongsTo(Document::class, 'document_id');
+    }
 
     public function factFinding()
     {
         return $this->belongsTo(Factfinding::class, 'factfinding_id');
     }
-
-
-
 }
+
 
