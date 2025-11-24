@@ -200,24 +200,44 @@ Route::middleware('auth')->group(function () {
         // แสดงข้อมูลทั้งหมดของ factfinding สำหรับ recipient
         Route::get('/factmaster/all/{id}', 'FactMasterAll')->name('factmaster.all');
 
-   
+        // เพิ่ม factfinding ใหม่
         Route::get('/factmaster/add/{id}', 'FactMasterAdd')->name('factmaster.add');
 
- 
+        // บันทึก factfinding ใหม่
         Route::post('/factmaster/store', 'FactMasterStore')->name('factmaster.store');
 
+        // แก้ไข factfinding
         Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');
 
-         Route::put('/factmaster/update/{id}', 'FactMasterUpdate')->name('factmaster.update');
-
-    });
-        // // ✅ เพิ่ม route สำหรับแก้ไข
-        // Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');
-
-        // // ✅ เพิ่ม route สำหรับบันทึกการแก้ไข
-        // Route::put('/factmaster/update/{id}', 'FactMasterUpdate')->name('factmaster.update');
+         // อัพเดท factfinding
+        Route::put('/factmaster/update/{id}', 'FactMasterUpdate')->name('fact_master.update');
+       
     });
 
+  
+});
 
 
+
+////-- Fact Finding Routes --//
+Route::middleware('auth')->group(function () {
+    Route::controller(FactFindingMasterController::class)->group(function () {
+
+        // แสดงข้อมูลทั้งหมดของ factfinding สำหรับ recipient
+        Route::get('/factmaster/all/{id}', 'FactMasterAll')->name('factmaster.all');
+
+        // เพิ่ม factfinding ใหม่
+        Route::get('/factmaster/add/{id}', 'FactMasterAdd')->name('factmaster.add');
+
+        // บันทึก factfinding ใหม่
+        Route::post('/factmaster/store', 'FactMasterStore')->name('factmaster.store');
+
+        // แก้ไข factfinding
+        Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');
+
+        // อัพเดท factfinding
+        Route::put('/factmaster/update/{id}', [FactFindingMasterController::class, 'FactMasterUpdate'])
+            ->name('fact_master.update');
+    });
+});
 

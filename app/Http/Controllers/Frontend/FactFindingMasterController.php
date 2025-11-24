@@ -13,10 +13,22 @@ class FactFindingMasterController extends Controller
 {
     public function FactMasterAll($id)
     {
-        $recipients = Recipient::findOrFail($id);
-        $factmasters = Factfinding::where('recipient_id', $id)->latest()->get();
+        // ดึงข้อมูลผู้รับ
+    $recipients = Recipient::findOrFail($id);
 
-        return view('frontend.fact_master.fact_master_all', compact('recipients', 'factmasters'));
+    // ดึง factfinding ของผู้รับ (One-to-One)
+    $factFinding = Factfinding::where('recipient_id', $id)->first();
+
+    // ดึงเอกสาร pivot
+    $documents = \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id ?? 0)->get();
+
+    return view('frontend.fact_master.fact_master_all', [
+        'recipients'  => $recipients,
+        'factFinding' => $factFinding,
+        'documents'   => $documents,
+    ]);
+
+
     }
 
     public function FactMasterAdd($id)
@@ -119,6 +131,12 @@ $documents = \App\Models\FactFindingDocument::with('document')
     ->where('factfinding_id', $factFinding->id)
     ->get();
 
+     $notification = [
+                'message' => 'Recipient Deleted Successfully',
+                'alert-type' => 'success'
+            ];
+
+
 return view('frontend.fact_master.fact_master_all', [
     'factFinding' => $factFinding,
     'documents'   => $documents,   // ตอน loop ใน blade ใช้ $doc->document->ชื่อฟิลด์
@@ -151,6 +169,84 @@ public function FactMasterEdit($id)
     ));
 }
 
+public function FactMasterUpdate(Request $request, $id)
+{
+    // 1) ใช้ recipient_id จากฟอร์มเป็น source of truth
+    $validated = $request->validate([
+        'recipient_id' => 'required|integer',
+        'date' => 'required|date',
+        'fact_name' => 'required|string|max:255',
+        'appearance' => 'nullable|string',
+        'skin' => 'nullable|string',
+        'scar' => 'nullable|string',
+        'disability' => 'nullable|string',
+        'evidence' => 'nullable|string',
+        'sick' => 'nullable|in:yes,no',
+        'sick_detail' => 'nullable|string',
+        'treatment' => 'nullable|string',
+        'hospital' => 'nullable|string',
+        'weight' => 'nullable|numeric',
+        'height' => 'nullable|numeric',
+        'hygiene' => 'nullable|string',
+        'oral_health' => 'nullable|string',
+        'injury' => 'nullable|string',
+        'case_history' => 'nullable|string',
+        'recorder' => 'nullable|string',
+        'active' => 'nullable|boolean',
+        'documents' => 'nullable|array',
+        'documents.*' => 'integer',
+    ]);
+
+    // 2) ดึงผู้รับและ factfinding จาก recipient_id (ไม่พึ่ง $id เพียงอย่างเดียว)
+    $recipientId = (int) $validated['recipient_id'];
+    $recipients = Recipient::findOrFail($recipientId);
+    $factFinding = Factfinding::where('recipient_id', $recipientId)->firstOrFail();
+
+    // 3) เตรียม payload สำหรับ update
+    $payload = [
+        'date' => $validated['date'],
+        'fact_name' => $validated['fact_name'],
+        'appearance' => $validated['appearance'] ?? 'ไม่ระบุ',
+        'skin' => $validated['skin'] ?? 'ไม่ระบุ',
+        'scar' => $validated['scar'] ?? 'ไม่ระบุ',
+        'disability' => $validated['disability'] ?? 'ไม่ระบุ',
+        'evidence' => $validated['evidence'] ?? '',
+        'sick' => isset($validated['sick']) ? strtolower($validated['sick']) : 'no',
+        'sick_detail' => $validated['sick_detail'] ?? '',
+        'treatment' => $validated['treatment'] ?? '',
+        'hospital' => $validated['hospital'] ?? '',
+        'weight' => isset($validated['weight']) ? (float)$validated['weight'] : 0,
+        'height' => isset($validated['height']) ? (float)$validated['height'] : 0,
+        'hygiene' => $validated['hygiene'] ?? 'ไม่ระบุ',
+        'oral_health' => $validated['oral_health'] ?? 'ไม่ระบุ',
+        'injury' => $validated['injury'] ?? 'ไม่ระบุ',
+        'case_history' => $validated['case_history'] ?? '',
+        'recorder' => $validated['recorder'] ?? '',
+        'active' => $validated['active'] ?? 1,
+    ];
+
+    // 4) อัพเดท factfinding
+    $factFinding->update($payload);
+
+    // 5) อัพเดท documents (pivot table)
+    \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
+    if (!empty($validated['documents'])) {
+        foreach ($validated['documents'] as $docId) {
+            \App\Models\FactFindingDocument::create([
+                'factfinding_id' => $factFinding->id,
+                'document_id'    => (int)$docId,
+            ]);
+        }
+    }
+
+    // 6) สร้างข้อความแจ้งเตือน
+    $notification = [
+        'success' => 'อัปเดตข้อมูลเรียบร้อยแล้ว',
+    ];
+
+    // 7) Redirect ไปหน้า all ที่ต้องการ {id} (recipient_id)
+    return redirect()->route('factmaster.all', $recipientId)->with($notification);
+}
 }
 
 

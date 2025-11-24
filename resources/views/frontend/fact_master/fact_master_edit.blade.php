@@ -32,13 +32,13 @@
                 <div class="col-xl-12">
                 <div class="card">
             
-        <div class="card-body">
-         <form action="{{ route('factmaster.update', $recipients->id) }}" method="POST">
+                 <div class="card-body">
+                   <form action="{{ route('fact_master.update', $recipients->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
             <!-- ส่ง id ไปด้วย -->
-            {{-- <input type="hidden" name="recipient_id" value="{{$recipients->id}}"> --}}
+            <input type="hidden" name="recipient_id" value="{{$recipients->id}}">
           
 
                 <div class="row pt-4">
