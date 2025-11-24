@@ -107,12 +107,12 @@
                         <label class="form-label d-block">ประวัติการเจ็บป่วย : <span class="text-danger">*</span></label>
                         <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="sick" id="sickYes"
-                            value="Yes" {{ old('sick') == 'Yes' ? 'checked' : '' }} required>
+                            value="yes" {{ old('sick') == 'yes' ? 'checked' : '' }}>
                         <label class="form-check-label" for="sickYes">มี</label>
                         </div>
                         <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="sick" id="sickNo"
-                            value="No" {{ old('sick') == 'No' ? 'checked' : '' }} required>
+                            value="no" {{ old('sick') == 'no' ? 'checked' : '' }}>
                         <label class="form-check-label" for="sickNo">ไม่มี</label>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                         <label for="sick_detail" class="form-label">รายละเอียดการเจ็บป่วย</label>
                         <textarea name="sick_detail" id="sick_detail"
                         class="form-control bg-white border rounded shadow-sm"
-                        rows="2" required></textarea> 
+                        rows="2"></textarea> 
                     </div> 
 
                        <div class="form-group col-md-6 mb-3">

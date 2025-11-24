@@ -205,6 +205,11 @@ Route::middleware('auth')->group(function () {
 
  
         Route::post('/factmaster/store', 'FactMasterStore')->name('factmaster.store');
+
+        Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');
+
+         Route::put('/factmaster/update/{id}', 'FactMasterUpdate')->name('factmaster.update');
+
     });
         // // ✅ เพิ่ม route สำหรับแก้ไข
         // Route::get('/factmaster/edit/{id}', 'FactMasterEdit')->name('factmaster.edit');

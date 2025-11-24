@@ -27,85 +27,6 @@ class FactFindingMasterController extends Controller
         return view('frontend.fact_master.fact_master_add', compact('recipients', 'documents'));
     }
 
-
-
-    //*********กรณีส่งเป็น json
-
-//    public function FactMasterStore(Request $request)
-// {
-//     $validated = $request->validate([
-//         'recipient_id' => 'required|integer',
-//         'date' => 'required|date',
-//         'fact_name' => 'required|string|max:255',
-//         'appearance' => 'nullable|string',
-//         'skin' => 'nullable|string',
-//         'scar' => 'nullable|string',
-//         'disability' => 'nullable|string',
-//         'sick' => 'nullable|string',
-//         'sick_detail' => 'nullable|string',
-//         'treatment' => 'nullable|string',
-//         'hospital' => 'nullable|string',
-//         'weight' => 'nullable|numeric',
-//         'height' => 'nullable|numeric',
-//         'hygiene' => 'nullable|string',
-//         'oral_health' => 'nullable|string',
-//         'injury' => 'nullable|string',
-//         'case_history' => 'nullable|string',
-//         'recorder' => 'nullable|string',
-//         'evidence' => 'nullable|string',
-//         'documents' => 'nullable|array',
-//         'documents.*' => 'integer'
-//     ]);
-
-//     // ✅ one-to-one ด้วย updateOrCreate
-//     $factFinding = Factfinding::updateOrCreate(
-//         ['recipient_id' => $validated['recipient_id']],
-//         [
-//             'date' => $validated['date'],
-//             'fact_name' => $validated['fact_name'],
-//             'appearance' => $validated['appearance'] ?? null,
-//             'skin' => $validated['skin'] ?? null,
-//             'scar' => $validated['scar'] ?? null,
-//             'disability' => $validated['disability'] ?? null,
-//             'sick' => $validated['sick'] ?? null,
-//             'sick_detail' => $validated['sick_detail'] ?? null,
-//             'treatment' => $validated['treatment'] ?? null,
-//             'hospital' => $validated['hospital'] ?? null,
-//             'weight' => $validated['weight'] ?? null,
-//             'height' => $validated['height'] ?? null,
-//             'hygiene' => $validated['hygiene'] ?? null,
-//             'oral_health' => $validated['oral_health'] ?? null,
-//             'injury' => $validated['injury'] ?? null,
-//             'case_history' => $validated['case_history'] ?? null,
-//             'recorder' => $validated['recorder'] ?? null,
-//             'evidence' => $validated['evidence'] ?? null,
-//         ]
-//     );
-
-//     // ✅ ลบ documents เดิมก่อน แล้วเพิ่มใหม่
-//     FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
-
-//     if (!empty($validated['documents'])) {
-//         foreach ($validated['documents'] as $docId) {
-//             FactFindingDocument::create([
-//                 'factfinding_id' => $factFinding->id,
-//                 'document_id' => $docId,
-//             ]);
-//         }
-//     }
-
-//     // ✅ ดึง documents ที่สัมพันธ์กับ factFinding
-//     $documents = FactFindingDocument::where('factfinding_id', $factFinding->id)
-//         ->pluck('document_id');
-
-//     return response()->json([
-//         'status' => 'success',
-//         'message' => 'บันทึกข้อมูลเรียบร้อยแล้ว',
-//         'data' => $factFinding,
-//         'documents' => $documents
-//     ]);
-// }
-
 public function FactMasterStore(Request $request)
 {
     $validated = $request->validate([
@@ -119,7 +40,7 @@ public function FactMasterStore(Request $request)
         'disability' => 'nullable|string',
         'evidence' => 'nullable|string',
 
-        'sick' => 'nullable|in:yes,no,YES,NO,Yes,No',
+        'sick' => 'nullable|in:yes,no',
         'sick_detail' => 'nullable|string',
         'treatment' => 'nullable|string',
         'hospital' => 'nullable|string',
@@ -142,6 +63,15 @@ public function FactMasterStore(Request $request)
     // ✅ ดึงข้อมูล Recipient
     $recipients = Recipient::findOrFail($validated['recipient_id']);
 
+     // 3. ตรวจสอบว่ามี factfinding อยู่แล้วหรือไม่ (One-to-One)
+    $existing = Factfinding::where('recipient_id', $validated['recipient_id'])->first();
+    if ($existing) {
+        // ✅ ถ้ามีแล้ว → redirect กลับพร้อมแจ้งเตือน
+        return redirect()
+            ->route('factmaster.edit', $validated['recipient_id'])
+            ->with('error', 'มีข้อมูล Factfinding ของผู้รับรายนี้อยู่แล้ว กรุณาแก้ไขแทนการบันทึกใหม่');
+    }
+
     // ✅ เตรียม payload ให้ครบ
     $payload = [
         'date' => $validated['date'] ?? now()->toDateString(),
@@ -151,7 +81,7 @@ public function FactMasterStore(Request $request)
         'scar' => $validated['scar'] ?? 'ไม่ระบุ',
         'disability' => $validated['disability'] ?? 'ไม่ระบุ',
         'evidence' => $validated['evidence'] ?? '',
-        'sick' => isset($validated['sick']) ? strtolower($validated['sick']) : 'no',
+       'sick' => isset($validated['sick']) ? strtolower($validated['sick']) : 'no',
         'sick_detail' => $validated['sick_detail'] ?? '',
         'treatment' => $validated['treatment'] ?? '',
         'hospital' => $validated['hospital'] ?? '',
@@ -171,7 +101,7 @@ public function FactMasterStore(Request $request)
         $payload
     );
 
-    // ✅ ลบ documents เดิมก่อน แล้วเพิ่มใหม่
+
    // ✅ ลบ documents เดิมก่อน แล้วเพิ่มใหม่
 \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
 
@@ -196,4 +126,31 @@ return view('frontend.fact_master.fact_master_all', [
 ]);
 
 }
+
+public function FactMasterEdit($id)
+{
+    // 1. ดึงข้อมูลผู้รับ
+    $recipients = Recipient::findOrFail($id);
+
+    // 2. ดึงข้อมูล factfinding ของผู้รับ (One-to-One)
+    $factFinding = Factfinding::where('recipient_id', $id)->firstOrFail();
+
+    // 3. ดึงเอกสารทั้งหมด
+    $documents = Document::all();
+
+    // 4. ดึงเอกสารที่เลือกไว้แล้ว (pivot relation)
+    // ✅ ระบุ table ให้ชัดเจนเพื่อแก้ ambiguous column
+    $selectedDocs = $factFinding->documents()->pluck('documents.id')->toArray();
+
+    // 5. ส่งข้อมูลไปที่ view
+    return view('frontend.fact_master.fact_master_edit', compact(
+        'recipients',
+        'factFinding',
+        'documents',
+        'selectedDocs'
+    ));
 }
+
+}
+
+
