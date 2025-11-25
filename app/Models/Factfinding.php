@@ -13,5 +13,10 @@ class Factfinding extends Model
         // ✅ ใช้ pivot table document_factfinding
         return $this->belongsToMany(Document::class, 'document_factfinding', 'factfinding_id', 'document_id');
     }
+public function recipient()
+    {
+        return $this->belongsTo(Recipient::class, 'recipient_id');
+    }
+    
 }
 

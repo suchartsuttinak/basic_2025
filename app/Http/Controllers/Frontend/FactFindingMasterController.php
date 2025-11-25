@@ -93,7 +93,7 @@ public function FactMasterStore(Request $request)
         'scar' => $validated['scar'] ?? 'ไม่ระบุ',
         'disability' => $validated['disability'] ?? 'ไม่ระบุ',
         'evidence' => $validated['evidence'] ?? '',
-       'sick' => isset($validated['sick']) ? strtolower($validated['sick']) : 'no',
+       'sick' => $validated['sick'] ?? 'no',
         'sick_detail' => $validated['sick_detail'] ?? '',
         'treatment' => $validated['treatment'] ?? '',
         'hospital' => $validated['hospital'] ?? '',
@@ -171,7 +171,6 @@ public function FactMasterEdit($id)
 
 public function FactMasterUpdate(Request $request, $id)
 {
-    // 1) ใช้ recipient_id จากฟอร์มเป็น source of truth
     $validated = $request->validate([
         'recipient_id' => 'required|integer',
         'date' => 'required|date',
@@ -181,8 +180,11 @@ public function FactMasterUpdate(Request $request, $id)
         'scar' => 'nullable|string',
         'disability' => 'nullable|string',
         'evidence' => 'nullable|string',
-        'sick' => 'nullable|in:yes,no',
+
+        // บังคับเลือก yes/no ให้ตรงกับฟอร์ม
+        'sick' => 'required|in:yes,no',
         'sick_detail' => 'nullable|string',
+
         'treatment' => 'nullable|string',
         'hospital' => 'nullable|string',
         'weight' => 'nullable|numeric',
@@ -197,12 +199,10 @@ public function FactMasterUpdate(Request $request, $id)
         'documents.*' => 'integer',
     ]);
 
-    // 2) ดึงผู้รับและ factfinding จาก recipient_id (ไม่พึ่ง $id เพียงอย่างเดียว)
     $recipientId = (int) $validated['recipient_id'];
     $recipients = Recipient::findOrFail($recipientId);
     $factFinding = Factfinding::where('recipient_id', $recipientId)->firstOrFail();
 
-    // 3) เตรียม payload สำหรับ update
     $payload = [
         'date' => $validated['date'],
         'fact_name' => $validated['fact_name'],
@@ -211,12 +211,17 @@ public function FactMasterUpdate(Request $request, $id)
         'scar' => $validated['scar'] ?? 'ไม่ระบุ',
         'disability' => $validated['disability'] ?? 'ไม่ระบุ',
         'evidence' => $validated['evidence'] ?? '',
-        'sick' => isset($validated['sick']) ? strtolower($validated['sick']) : 'no',
+
+        // ใช้ค่าที่ validate แล้วโดยตรง
+        'sick' => $validated['sick'],
+
+        // ถ้าเลือก yes แต่ไม่กรอกรายละเอียด อนุญาตให้ว่างหรือบังคับก็ได้ ขึ้นกับธุรกิจ
         'sick_detail' => $validated['sick_detail'] ?? '',
+
         'treatment' => $validated['treatment'] ?? '',
         'hospital' => $validated['hospital'] ?? '',
-        'weight' => isset($validated['weight']) ? (float)$validated['weight'] : 0,
-        'height' => isset($validated['height']) ? (float)$validated['height'] : 0,
+        'weight' => isset($validated['weight']) ? (float) $validated['weight'] : 0,
+        'height' => isset($validated['height']) ? (float) $validated['height'] : 0,
         'hygiene' => $validated['hygiene'] ?? 'ไม่ระบุ',
         'oral_health' => $validated['oral_health'] ?? 'ไม่ระบุ',
         'injury' => $validated['injury'] ?? 'ไม่ระบุ',
@@ -225,27 +230,19 @@ public function FactMasterUpdate(Request $request, $id)
         'active' => $validated['active'] ?? 1,
     ];
 
-    // 4) อัพเดท factfinding
     $factFinding->update($payload);
 
-    // 5) อัพเดท documents (pivot table)
     \App\Models\FactFindingDocument::where('factfinding_id', $factFinding->id)->delete();
     if (!empty($validated['documents'])) {
         foreach ($validated['documents'] as $docId) {
             \App\Models\FactFindingDocument::create([
                 'factfinding_id' => $factFinding->id,
-                'document_id'    => (int)$docId,
+                'document_id'    => (int) $docId,
             ]);
         }
     }
 
-    // 6) สร้างข้อความแจ้งเตือน
-    $notification = [
-        'success' => 'อัปเดตข้อมูลเรียบร้อยแล้ว',
-    ];
-
-    // 7) Redirect ไปหน้า all ที่ต้องการ {id} (recipient_id)
-    return redirect()->route('factmaster.all', $recipientId)->with($notification);
+    return redirect()->route('factmaster.all', $recipientId)->with(['success' => 'อัปเดตข้อมูลเรียบร้อยแล้ว']);
 }
 }
 

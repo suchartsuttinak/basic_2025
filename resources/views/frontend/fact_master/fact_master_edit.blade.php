@@ -105,34 +105,41 @@
                             @enderror
                         </div>
 
-                                <!-- Sick radio button -->
-                        <div class="form-group col-md-2 mb-3">
-                            <label class="form-label d-block">ประวัติการเจ็บป่วย : <span class="text-danger">*</span></label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sick" id="sickYes"
-                                    value="Yes"
-                                    {{ (old('sick') ?? $factFinding->sick) === 'yes' ? 'checked' : '' }} required>
-                                <label class="form-check-label" for="sickYes">มี</label>
+                              <!-- Sick radio button -->
+                            <div class="form-group col-md-2 mb-3">
+                                <label class="form-label d-block">ประวัติการเจ็บป่วย : <span class="text-danger">*</span></label>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sick" id="sickYes"
+                                        value="yes"
+                                        {{ old('sick', $factFinding->sick ?? '') === 'yes' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="sickYes">มี</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sick" id="sickNo"
+                                        value="no"
+                                        {{ old('sick', $factFinding->sick ?? '') === 'no' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="sickNo">ไม่มี</label>
+                                </div>
+
+                                @error('sick')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sick" id="sickNo"
-                                    value="no"
-                                    {{ (old('sick') ?? $factFinding->sick) === 'no' ? 'checked' : '' }} required>
-                                <label class="form-check-label" for="sickNo">ไม่มี</label>
-                            </div>
-                        </div>
-
-                        <!-- รายละเอียดการรักษา -->
-                        <div class="form-group col-md-6 mb-3" id="sickDetailGroup"
-                                style="{{ strtolower(old('sick', $factFinding->sick)) === 'yes' ? '' : 'display:none;' }}">
+                            <!-- รายละเอียดการเจ็บป่วย -->
+                            <div class="form-group col-md-6 mb-3" id="sickDetailGroup"
+                                style="{{ strtolower(old('sick', $factFinding->sick ?? '')) === 'yes' ? '' : 'display:none;' }}">
                                 <label for="sick_detail" class="form-label">รายละเอียดการเจ็บป่วย</label>
                                 <textarea name="sick_detail" id="sick_detail"
-                                    class="form-control bg-white border rounded shadow-sm"
-                                    rows="2"
-                                    {{ strtolower(old('sick', $factFinding->sick)) 
-                                    === 'yes' ? 'required' : '' }}>{{ old('sick_detail', $factFinding->sick_detail) }}</textarea>
+                                        class="form-control bg-white border rounded shadow-sm"
+                                        rows="2"
+                                        {{ strtolower(old('sick', $factFinding->sick ?? '')) === 'yes' ? 'required' : '' }}
+                                >{{ old('sick_detail', $factFinding->sick_detail ?? '') }}</textarea>
                             </div>
+
+
 
                        <div class="form-group col-md-6 mb-3">
                             <label for="treatment" class="form-label">การรักษาพยาบาล</label>
@@ -269,30 +276,30 @@
 </div>
 
 <!-- ประวัติการรักษาพยาบาล -->
-             <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const sickYes = document.getElementById('sickYes');
-                    const sickNo = document.getElementById('sickNo');
-                    const sickDetailGroup = document.getElementById('sickDetailGroup');
+            <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const yes = document.getElementById('sickYes');
+    const no = document.getElementById('sickNo');
+    const detail = document.getElementById('sickDetailGroup');
+    const detailField = document.getElementById('sick_detail');
 
-                    function toggleSickDetail() {
-                        if (sickYes.checked) {
-                            sickDetailGroup.style.display = 'block';
-                            document.getElementById('sick_detail').setAttribute('required', 'required');
-                        } else {
-                            sickDetailGroup.style.display = 'none';
-                            document.getElementById('sick_detail').removeAttribute('required');
-                        }
-                    }
+    function toggleDetail() {
+        if (yes.checked) {
+            detail.style.display = '';
+            detailField.setAttribute('required', 'required');
+        } else {
+            detail.style.display = 'none';
+            detailField.removeAttribute('required');
+        }
+    }
 
-                    // เรียกเมื่อโหลดหน้า
-                    toggleSickDetail();
+    yes.addEventListener('change', toggleDetail);
+    no.addEventListener('change', toggleDetail);
+    toggleDetail(); // init on load
+});
+</script>
 
-                    // เรียกเมื่อมีการเปลี่ยนค่า
-                    sickYes.addEventListener('change', toggleSickDetail);
-                    sickNo.addEventListener('change', toggleSickDetail);
-                });
-                </script>
+
 
 
 @endsection
