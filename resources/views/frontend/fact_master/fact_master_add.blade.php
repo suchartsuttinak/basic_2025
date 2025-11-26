@@ -136,10 +136,6 @@
                                     >{{ old('sick_detail') }}</textarea>
                                 </div>
 
-
-
-
-
                        <div class="form-group col-md-6 mb-3">
                             <label for="treatment" class="form-label">การรักษาพยาบาล</label>
                             <input type="text" name="treatment" class="form-control" required value="{{ old('treatment') }}">

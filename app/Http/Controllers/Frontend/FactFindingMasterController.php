@@ -70,7 +70,33 @@ public function FactMasterStore(Request $request)
 
         'documents' => 'nullable|array',
         'documents.*' => 'integer',
+
+        // validation rules thai
+        ], [], [
+        'recipient_id' => 'รหัสผู้รับ',
+        'date' => 'วันที่',
+        'fact_name' => 'ชื่อข้อเท็จจริง',
+        'appearance' => 'รูปลักษณ์',
+        'skin' => 'สีผิว',
+        'scar' => 'แผลเป็น',
+        'disability' => 'ความพิการ',
+        'evidence' => 'หลักฐาน',
+        'sick' => 'การเจ็บป่วย',
+        'sick_detail' => 'รายละเอียดการเจ็บป่วย',
+        'treatment' => 'การรักษา',
+        'hospital' => 'โรงพยาบาล',
+        'weight' => 'น้ำหนัก',
+        'height' => 'ส่วนสูง',
+        'hygiene' => 'สุขอนามัย',
+        'oral_health' => 'สุขภาพช่องปาก',
+        'injury' => 'การบาดเจ็บ',
+        'case_history' => 'ประวัติกรณี',
+        'recorder' => 'ผู้บันทึก',
+        'active' => 'สถานะ',
+        'documents' => 'เอกสาร',
     ]);
+
+  //End validation rules thai
 
     // ✅ ดึงข้อมูล Recipient
     $recipients = Recipient::findOrFail($validated['recipient_id']);
@@ -197,7 +223,33 @@ public function FactMasterUpdate(Request $request, $id)
         'active' => 'nullable|boolean',
         'documents' => 'nullable|array',
         'documents.*' => 'integer',
+
+    // validation rules thai
+        ], [], [
+        'recipient_id' => 'รหัสผู้รับ',
+        'date' => 'วันที่',
+        'fact_name' => 'ชื่อข้อเท็จจริง',
+        'appearance' => 'รูปลักษณ์',
+        'skin' => 'สีผิว',
+        'scar' => 'แผลเป็น',
+        'disability' => 'ความพิการ',
+        'evidence' => 'หลักฐาน',
+        'sick' => 'การเจ็บป่วย',
+        'sick_detail' => 'รายละเอียดการเจ็บป่วย',
+        'treatment' => 'การรักษา',
+        'hospital' => 'โรงพยาบาล',
+        'weight' => 'น้ำหนัก',
+        'height' => 'ส่วนสูง',
+        'hygiene' => 'สุขอนามัย',
+        'oral_health' => 'สุขภาพช่องปาก',
+        'injury' => 'การบาดเจ็บ',
+        'case_history' => 'ประวัติกรณี',
+        'recorder' => 'ผู้บันทึก',
+        'active' => 'สถานะ',
+        'documents' => 'เอกสาร',
     ]);
+
+    //End validation rules thai
 
     $recipientId = (int) $validated['recipient_id'];
     $recipients = Recipient::findOrFail($recipientId);

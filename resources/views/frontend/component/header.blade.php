@@ -241,14 +241,16 @@
                     <li><a href="single-portfolio.html">Portfolio Details</a></li>
                   </ul>
                 </li>
+
                 <li class="menu-item-has-children">
-                  <a href="#">Blog</a>
+                  <a href="#">รายงาน</a>
                   <ul class="sub-menu">
-                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="{{ route('factmaster.all', $recipients->id) }}">สอบข้อเท็จจริงเบื้องต้น</a></li>
                     <li><a href="single-blog.html">Blog Details</a></li>
                   </ul>
                 </li>
                 <li>
+                    <ul class="sub-menu">
                   <a href="contact-us.html">Contact</a>
                 </li>
               </ul>

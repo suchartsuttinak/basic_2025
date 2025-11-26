@@ -217,8 +217,6 @@ Route::middleware('auth')->group(function () {
   
 });
 
-
-
 ////-- Fact Finding Routes --//
 Route::middleware('auth')->group(function () {
     Route::controller(FactFindingMasterController::class)->group(function () {

@@ -39,51 +39,51 @@
                         <th>การจัดการ</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($recipients as $key => $recip)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
+            <tbody>
+        @foreach ($recipients as $key => $recip)
+            <tr>
+                <td>{{ $key + 1 }}</td>
 
-                              <!-- ดึงภาพ -->
-                             <td>
-                               <img src="{{ $recip->image ? asset('upload/recipient_images/'.$recip->image) 
-                               : asset('upload/no_image.jpg') }}"
-                                style="height: 40px; width: 40px; object-fit: cover;">
-                            </td>
-                            <td>{{ $recip->full_name }}</td>
-                             <td>{{ $recip->arrival_date }}</td>
+                    <!-- ดึงภาพ -->
+                    <td>
+                    <img src="{{ $recip->image ? asset('upload/recipient_images/'.$recip->image) 
+                    : asset('upload/no_image.jpg') }}"
+                    style="height: 40px; width: 40px; object-fit: cover;">
+                </td>
+                <td>{{ $recip->full_name }}</td>
+                    <td>{{ $recip->arrival_date }}</td>
 
-                            {{-- <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('d/m/Y') }}</td>> --}}
-                            <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($recip->birth_date) }}</td>
-                               <td>{{ $recip->age }}</td>
-                            <td>{{ $recip->address }}</td>
-                            <td>{{ $recip->phone }}</td>
-                            <td>
-                                @if($recip->problems->isNotEmpty())
-                                    <ul class="mb-0 ps-3">
-                                        @foreach($recip->problems as $problem)
-                                            <li>{{ $problem->name }}</li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    <span class="text-muted">ไม่มีข้อมูล</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a title="Edit" href="{{ route('recipient.edit', $recip->id) }}" 
-                                    class="btn btn-success btn-sm">
-                                    <span class="mdi mdi-book-edit-outline mdi-18px"></span>
-                                </a>
-                               <a title="Delete" href="{{ route('recipient.delete', $recip->id) }}" 
-                                    class="btn btn-danger btn-sm" id="delete">
-                                    <span class="mdi mdi-trash-can-outline mdi-18px"></span>
-                        </a>
-                               <a title="add" href="{{ route('all.child', $recip->id) }}" 
-                                    class="btn btn-primary btn-sm">
-                                     <span class="mdi mdi-eye-circle mdi-18px"></span></a>
+                {{-- <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('d/m/Y') }}</td>> --}}
+                <td>{{ \App\Helpers\ThaiDateHelper::formatThaiDate($recip->birth_date) }}</td>
+                    <td>{{ $recip->age }}</td>
+                <td>{{ $recip->address }}</td>
+                <td>{{ $recip->phone }}</td>
+                <td>
+                    @if($recip->problems->isNotEmpty())
+                        <ul class="mb-0 ps-3">
+                            @foreach($recip->problems as $problem)
+                                <li>{{ $problem->name }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <span class="text-muted">ไม่มีข้อมูล</span>
+                    @endif
+                </td>
+                <td>
+                    <a title="Edit" href="{{ route('recipient.edit', $recip->id) }}" 
+                        class="btn btn-success btn-sm">
+                        <span class="mdi mdi-book-edit-outline mdi-18px"></span>
+                    </a>
+                    <a title="Delete" href="{{ route('recipient.delete', $recip->id) }}" 
+                        class="btn btn-danger btn-sm" id="delete">
+                        <span class="mdi mdi-trash-can-outline mdi-18px"></span>
+            </a>
+                    <a title="add" href="{{ route('all.child', $recip->id) }}" 
+                        class="btn btn-primary btn-sm">
+                            <span class="mdi mdi-eye-circle mdi-18px"></span></a>
 
-                        </a>
-                            </td>
+            </a>
+                </td>
                         </tr>
                     @endforeach
                 </tbody>
