@@ -199,15 +199,65 @@
                             @enderror
                         </div>
 
-                    <div class="col-md-4 mb-3">
-                            <label for="address" class="form-label">ที่อยู่</label>
+                    <div class="col-md-2 mb-3">
+                            <label for="address" class="form-label">ที่อยู่เลขที่</label>
                             <input type="text" name="address" id="address" 
                                 class="form-control" 
-                                value="{{ old('address') }}" required>
+                                value="{{ old('address') }}">
                             @error('address')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
+                     <div class="col-md-1 mb-3">
+                            <label for="address" class="form-label">หมู่ที่</label>
+                            <input type="text" name="moo" id="moo" 
+                                class="form-control" 
+                                value="{{ old('moo') }}">
+                            @error('moo')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="soi" class="form-label">ตรอก/ซอย</label>
+                            <input type="text" name="soi" id="soi" 
+                                class="form-control" 
+                                value="{{ old('soi') }}">
+                            @error('soi')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                         </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="road" class="form-label">ถนน</label>
+                            <input type="text" name="road" id="road" 
+                                class="form-control" 
+                                value="{{ old('road') }}">
+                            @error('road')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                         </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="village" class="form-label">หมู่บ้าน</label>
+                            <input type="text" name="village" id="village" 
+                                class="form-control" 
+                                value="{{ old('village') }}">
+                            @error('village')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                         </div>
+
+
+
+
+
+
+
+
+
+
 
                         <div class="form-group col-md-4 mb-3">
                             <div class="form-group w-100">
@@ -226,7 +276,7 @@
 
                 <div class="form-group col-md-4 mb-3">
                         <div class="form-group w-100">
-                            <label class="form-label" for="district">อำเภอ : <span class="text-danger">*</span></label>
+                            <label class="form-label" for="district">เขต/อำเภอ : <span class="text-danger">*</span></label>
                             <select name="district_id" id="district" class="form-control form-select">
                                 <option value="">--เลือกอำเภอ--</option>
                                 @foreach($districts as $district)
@@ -241,7 +291,7 @@
 
                 <div class="form-group col-md-4 mb-3">
                         <div class="form-group w-100">
-                            <label class="form-label" for="subdistrict">ตำบล : <span class="text-danger">*</span></label>
+                            <label class="form-label" for="subdistrict">แขวง/ตำบล : <span class="text-danger">*</span></label>
                             <select name="sub_district_id" id="subdistrict" class="form-select" required>
                                 <option value="">-- เลือกตำบล --</option>
                                 @foreach($sub_districts as $subdistrict)

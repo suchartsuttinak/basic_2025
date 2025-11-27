@@ -44,7 +44,7 @@
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 gap: 8px 16px;
-                margin-top: 10px;
+                margin-top: 10px;.
                 margin-bottom: 20px;
             }
             .problem-item {
@@ -59,7 +59,7 @@
             }
         </style>
         <div class="report-container">
-            <div class="report-title">ทะเบียนประวัติผู้รับการสงเคราะห์</div>
+            <div class="report-title">ข้อมูลพื้นผู้รับการสงเคราะห์</div>
 
             {{-- รูปภาพ --}}
                 <div class="report-section">
@@ -100,7 +100,7 @@
 
             {{-- บัตรประชาชน / วันที่รับเข้า  --}}
             <div class="report-section">
-                <div class="item"><span class="label">บัตรประชาชนเลขที่:</span> {{ $recipients->id_card }}</div>
+                <div class="item"><span class="label">เลขประจำตัวประชาชน:</span> {{ $recipients->id_card }}</div>
                 <div class="item"><span class="label">วันที่รับเข้า:</span> {{ $recipients->arrival_date ? \Carbon\Carbon::parse($recipients->arrival_date)->format('d/m/Y') : '-' }}</div>
             </div>
             {{-- กลุ่มเป้าหมาย --}}
@@ -108,9 +108,17 @@
                 <div class="item"><span class="label">กลุ่มเป้าหมาย:</span> {{ optional($recipients->target)->target_name ?? '-' }}</div>
             </div>
 
-            {{-- ที่อยู่ --}}
+            {{-- ที่อยู่ หมู่ที่ ตรอก/ซอย ถนน หมู่บ้าน --}}
             <div class="report-section">
-                <div class="item"><span class="label">ที่อยู่:</span> {{ $recipients->address }}</div>
+                <div class="item"><span class="label">ที่อยู่เลขที่:</span> {{ $recipients->address }}</div>
+                <div class="item"><span class="label">หมู่ที่:</span> {{ $recipients->moo }}</div>
+                <div class="item"><span class="label">ตรอก/ซอย:</span> {{ $recipients->soi }}</div>
+                <div class="item"><span class="label">ถนน:</span> {{ $recipients->road }}</div>
+                <div class="item"><span class="label">หมู่บ้าน:</span> {{ $recipients->village }}</div>
+            </div>
+
+            {{-- จังหวัด อําเภอ ตําบล --}}
+            <div class="report-section">
                 <div class="item"><span class="label">ตำบล:</span> {{ optional($recipients->sub_district)->subd_name ?? '-' }}</div>
                 <div class="item"><span class="label">อำเภอ:</span> {{ optional($recipients->district)->dist_name ?? '-' }}</div>
                 <div class="item"><span class="label">จังหวัด:</span> {{ optional($recipients->province)->prov_name ?? '-' }}</div>
@@ -119,7 +127,7 @@
             {{-- รหัสไปรษณีย์ โทรศัพท์ --}}
             <div class="report-section">
                 <div class="item"><span class="label">รหัสไปรษณีย์:</span> {{ $recipients->zipcode }}</div>
-                <div class="item"><span class="label">โทร:</span> {{ $recipients->phone }}</div>
+                <div class="item"><span class="label">โทรศัพท์:</span> {{ $recipients->phone }}</div>
             </div>
 
             {{-- การศึกษา --}}
@@ -142,8 +150,8 @@
             {{-- โครงการ / ผู้ติดต่อ / บ้าน --}}
             <div class="report-section">
                 <div class="item"><span class="label">โครงการ:</span> {{ optional($recipients->project)->project_name ?? '-' }}</div>
-                <div class="item"><span class="label">ผู้ติดต่อ:</span> {{ optional($recipients->contact)->contact_name ?? '-' }}</div>
-                <div class="item"><span class="label">บ้านพัก:</span> {{ optional($recipients->house)->hname ?? '-' }}</div>
+                <div class="item"><span class="label">ผู้ติดต่อ/นำส่ง:</span> {{ optional($recipients->contact)->contact_name ?? '-' }}</div>
+                <div class="item"><span class="label">บ้านพัก:</span> {{ optional($recipients->house)->house_name ?? '-' }}</div>
             </div>
 
             {{-- ปัญหา --}}
@@ -155,7 +163,7 @@
                     $allProblems = [
                         'เร่ร่อน','ถูกทอดทิ้ง','ถูกเลี้ยงดูไม่เหมาะสม','ถูกทารุณกรรม','ถูกกระทำความรุนแรงในครอบครัว',
                         'ถูกแสวงหาประโยชน์','เหยื่อค้ามนุษย์','กำพร้าบิดา','กำพร้ามารดา','ปัญหาความประพฤติ',
-                        'ครอบครัวแตกแยก','บิดา/มารดาถูกต้องโทษ','ถูกล่อลวง','ถูกทารุณกรรมทางเพศ',
+                        'ครอบครัวแตกแยก','บิดา/มารดาถูกต้องโทษ','ถูกล่อลวง','ถูกกระทำทารุณกรรมทางเพศ',
                         'ตั้งครรภ์ไม่พึงประสงค์','อยู่ในสภาวะยากลำบาก','ไม่มีสถานะทางทะเบียน',
                     ];
                     $selected = $recipients->problems->pluck('name')->toArray();

@@ -53,7 +53,7 @@ class ChildController extends Controller
 
     $problems = Problem::all(); // ✅ ต้องมีถ้าใช้ compact('problems')
 
-    return view('frontend.child.all_child', compact('recipients', 'problems'));
+    return view('frontend.child.child_report', compact('recipients', 'problems'));
 
     }
 }

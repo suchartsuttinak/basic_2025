@@ -10,7 +10,7 @@
                  </div>
 
         <div class="card-body">
-            <form action="{{ route('recipient.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('recipient.update', $recipient->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- ส่ง id ไปด้วย -->
                 <input type="hidden" name="id" value="{{ $recipient->id }}">
@@ -27,7 +27,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-2 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="target_id">
                                 คำนำหน้าชื่อ : <span class="text-danger">*</span>
@@ -48,7 +48,7 @@
                     </div>          
           
                     <!-- Gender radio button -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 mb-3">
                     <label class="form-label d-block">เพศ : <span class="text-danger">*</span></label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="gender" id="genderMale"
@@ -65,17 +65,17 @@
                 <!-- End Gender radio button -->
 
                    <div class="col-md-4 mb-3">
-                        <label for="nick_name" class="form-label fw-bold">ชื่อเล่น</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text" name="nick_name" id="nick_name" class="form-control"
-                                value="{{ old('nick_name', $recipient->nick_name) }}"
-                                placeholder="กรอกชื่อเล่น">
-                        </div>
+                        <label for="nick_name" class="form-label fw-bold">
+                            ชื่อ : <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" name="nick_name" id="nick_name" 
+                            class="form-control" 
+                            value="{{ old('nick_name', $recipient->nick_name) }}" 
+                            placeholder="กรอกชื่อจริง">
                         @error('nick_name')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </div>
+                </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="first_name" class="form-label fw-bold">
@@ -225,7 +225,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-4 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="education_id">
                                 การศึกษา : <span class="text-danger">*</span>
@@ -245,7 +245,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-8 mb-3">
                         <label for="scholl" class="form-label fw-bold">ชื่อโรงเรียน</label>
                         <input type="text" name="scholl" id="scholl" 
                             class="form-control" 
@@ -256,8 +256,9 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-12 mb-3">
-                        <label for="address" class="form-label fw-bold">ที่อยู่</label>
+                    
+                    <div class="col-md-2 mb-3">
+                        <label for="address" class="form-label fw-bold">ที่อยู่เลขที่</label>
                         <input type="text" name="address" id="address" 
                             class="form-control" 
                             value="{{ old('address', $recipient->address) }}" 
@@ -267,7 +268,51 @@
                         @enderror
                     </div>
 
-                <div class="col-md-6 mb-3">
+                    <div class="col-md-1 mb-3">
+                        <label for="moo" class="form-label fw-bold">หมู่ที่</label>
+                        <input type="text" name="moo" id="moo" 
+                            class="form-control" 
+                            value="{{ old('moo', $recipient->moo) }}" 
+                            placeholder="กรอกหมู่">
+                        @error('moo')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="soi" class="form-label fw-bold">ตรอก/ซอย</label>
+                        <input type="text" name="soi" id="soi" 
+                            class="form-control" 
+                            value="{{ old('soi', $recipient->soi) }}" 
+                            placeholder="กรอกตรอก/ซอย">
+                        @error('soi')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="road" class="form-label fw-bold">ถนน</label>
+                        <input type="text" name="road" id="road" 
+                            class="form-control" 
+                            value="{{ old('road', $recipient->road) }}" 
+                            placeholder="กรอกตรอก/ซอย">
+                        @error('road')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="village" class="form-label fw-bold">หมู่บ้าน</label>
+                        <input type="text" name="village" id="village" 
+                            class="form-control" 
+                            value="{{ old('village', $recipient->village) }}" 
+                            placeholder="หมู่บ้าน">
+                        @error('village')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                <div class="col-md-3 mb-3">
                     <div class="form-group w-100">
                         <label class="form-label fw-bold" for="province">
                             จังหวัด : <span class="text-danger">*</span>
@@ -287,7 +332,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                     <div class="form-group w-100">
                         <label class="form-label fw-bold" for="district">
                             อำเภอ : <span class="text-danger">*</span>
@@ -307,7 +352,7 @@
                     </div>
                 </div>
 
-               <div class="col-md-6 mb-3">
+               <div class="col-md-3 mb-3">
                     <div class="form-group w-100">
                         <label class="form-label fw-bold" for="subdistrict">
                             ตำบล : <span class="text-danger">*</span>
@@ -327,8 +372,7 @@
                     </div>
                 </div>
   
-
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label for="zipcode" class="form-label fw-bold">รหัสไปรษณีย์</label>
                         <input type="text" name="zipcode" id="zipcode" 
                             class="form-control" 
@@ -339,7 +383,7 @@
                         @enderror
                     </div>
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <label for="phone" class="form-label fw-bold">โทรศัพท์</label>
                         <input type="text" name="phone" id="phone" 
                             class="form-control" 
@@ -349,8 +393,8 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-
-                    <div class="col-md-6 mb-3">
+                
+                    <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="target_id">
                                 กลุ่มเป้าหมาย : <span class="text-danger">*</span>
@@ -368,9 +412,11 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                    </div>          
+                    </div> 
+                  
+                    
 
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="contact_id">
                                 การติดต่อ : <span class="text-danger">*</span>
@@ -390,7 +436,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="project_id">
                                 หน่วยงาน : <span class="text-danger">*</span>
@@ -410,7 +456,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="house_id">
                                 สถานที่พัก : <span class="text-danger">*</span>
@@ -429,8 +475,11 @@
                             @enderror
                         </div>
                     </div>
+               
 
-                     <div class="col-md-6 mb-3">
+
+
+                     <div class="col-md-3 mb-3">
                         <div class="form-group w-100">
                             <label class="form-label fw-bold" for="status_id">
                                 สถานะผู้เข้ารับ : <span class="text-danger">*</span>
@@ -475,30 +524,31 @@
                     </div>
 
                        <!-- Image -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="image" class="form-label">อัปโหลดรูป</label>
                                 <input class="form-control" type="file" name="image" id="image">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 pt-2">
                                 <label for="image" class="form-label">ภาพถ่าย</label>
                                 <img id="showImage" 
                                     src="{{ $recipient->image ? asset('upload/recipient_images/'.$recipient->image) 
                                      : asset('upload/no_image.jpg') }}"
                                     class="rounded-circle avatar-xxl img-thumbnail float-start" alt="image profile">
                             </div>
-                            <!-- Image -->
+                            <!-- End Image -->
 
-                   <div class="col-md-12 mb-3">
-    <label class="form-label fw-bold">
-        ปัญหาที่พบ <span class="text-danger">* (เลือกได้มากกว่า 1 รายการ)</span>
-    </label>
-    <div class="row">
-        @foreach($problems as $problem)
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"
-                        name="problems[]" value="{{ $problem->id }}"
+                    <!-- End Problems -->
+                    <div class="col-md-12 mb-3 pt-4 ">
+                        <label class="form-label fw-bold">
+                            ปัญหาที่พบ <span class="text-danger">* (เลือกได้มากกว่า 1 รายการ)</span>
+                        </label>
+                        <div class="row">
+                            @foreach($problems as $problem)
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                            name="problems[]" value="{{ $problem->id }}"
                         id="problem{{ $problem->id }}"
                         {{ in_array($problem->id, old('problems', $recipient->problems->pluck('id')->toArray())) ? 'checked' : '' }}>
                     <label class="form-check-label" for="problem{{ $problem->id }}">

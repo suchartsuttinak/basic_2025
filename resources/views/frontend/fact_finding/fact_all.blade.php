@@ -1,127 +1,403 @@
 @extends('frontend.main.main_recipient')
   
-
 @section('content')
-  <div class="content">
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-
-                        <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-                            <div class="flex-grow-1">
-                                <h4 class="fs-18 fw-semibold m-0">{{ $recipients->full_name }}</h4>
-                            </div>
-            
-                            <!-- Modal Add Category -->
-                            <div class="text-end">
-                                <ol class="breadcrumb m-0 py-0">
-                                   <button 
-                                    type="button" class="btn btn-primary" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#standard-modal">
-                                    Add Category
-                                    </button>
-                                </ol>
-                            </div>
-                            <!--End Modal Add Category -->
-                        </div>
-
-            <!-- Datatables Table  -->
+<form method="POST" action="">
+    @csrf
+    {{-- ที่อยู่บิดา --}}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">ที่อยู่บิดา</div>
+        <div class="card-body">
             <div class="row">
-                <div class="col-12">
-                    <div class="card">
-
-                        <div class="card-header">
-                            <h5 class="card-title mb-0"></h5>
-                        </div><!-- end card header -->
-
-                        <!-- Category Table -->
-                        <div class="card-body">
-                            <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
-                                <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Category Name</th>
-                                    <th>Category Slug</th>                                 
-                                    <th>Action</th>                                 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>           
-                                    <td>
-                                    <!-- Edit Modal -->
-                                      <button class="btn btn-primary btn-sm">บันทึก</button>
-                                    <button class="btn btn-danger btn-sm">ยกเลิก</button>
-                                    </td>
-                                    </tr>
-                             
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--End Category Table -->
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- container-fluid -->
-                </div> <!-- content -->
-
-                   <!-- Form Create Category Modal -->
-                    <div class="modal fade" id="standard-modal" tabindex="-1" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="standard-modalLabel">Product Category</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                        <form action="" method="POST">
-                            @csrf
-                            <div class="form-group col-md-12">
-                                <label for="category_name" class="form-label">Product Category Name</label>
-                                <input type="text" class="form-control" id="category_name" name="category_name" >                              
-                            </div>
-                            
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_title">คำนำหน้าชื่อ</label>
+                    <input type="text" class="form-control" name="title">
                 </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_fname">บิดาชื่อ</label>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_lname">นามสกุล</label>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_age">อายุ (ปี)</label>
+                    <input type="number" class="form-control" name="age">
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="occupation">อาชีพ</label>
+                    <input type="text" class="form-control" name="occupation">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="income">รายได้เฉลี่ย (บาท/เดือน)</label>
+                    <input type="number" class="form-control" name="income">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idcard">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" name="idcard">
+                </div>
+            </div>
 
-                <!-- Edit Category Modal -->
-                    <div class="modal fade" id="category" tabindex="-1" aria-labelledby="standard-modalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="standard-modalLabel">Product Category</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                        <form action="" method="POST">
-                            @csrf                            
-                            <!-- hidden id -->
-                            <input type="hidden" name="cat_id" id="cat_id">
-
-                            <div class="form-group col-md-12">
-                                <label for="category_name" class="form-label">Product Category Name</label>
-                                <input type="text" class="form-control" id="cat" name="category_name" >                              
-                            </div>
-                            
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-sm ">Update </button>
-                            </div>
-                        </form>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <label>เลขที่</label>
+                    <input type="text" class="form-control" name="address_no">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่ที่</label>
+                    <input type="text" class="form-control" name="moo">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ตรอก/ซอย</label>
+                    <input type="text" class="form-control" name="soi">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ถนน</label>
+                    <input type="text" class="form-control" name="road">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่บ้าน</label>
+                    <input type="text" class="form-control" name="village">
                 </div>
                 
-      
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>จังหวัด</label>
+                    <input type="text" class="form-control" name="province_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>อำเภอ/เขต</label>
+                    <input type="text" class="form-control" name="district_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>ตำบล/แขวง</label>
+                    <input type="text" class="form-control" name="sub_district_id">
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" name="zipcode">
+                </div>
+            </div>
 
 
-      
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>โทรศัพท์</label>
+                    <input type="text" class="form-control" name="phone">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ปุ่มแสดงฟอร์มอื่น ๆ --}}
+    <div class="mb-4">
+        <button type="button" class="btn btn-outline-success" onclick="toggleSection('mother')">+ ที่อยู่มารดา</button>
+        <button type="button" class="btn btn-outline-info" onclick="toggleSection('spouse')">+ ที่อยู่สามี/ภรรยา</button>
+        <button type="button" class="btn btn-outline-warning" onclick="toggleSection('relative')">+ ที่อยู่ญาติ</button>
+    </div>
+
+    {{-- ที่อยู่มารดา --}}
+    <div id="section-mother" class="card mb-4 d-none">
+        <div class="card-header bg-success text-white">ที่อยู่มารดา</div>
+        <div class="card-body">
+          <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="father_title">คำนำหน้าชื่อ</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_fname">บิดาชื่อ</label>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_lname">นามสกุล</label>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_age">อายุ (ปี)</label>
+                    <input type="number" class="form-control" name="age">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="occupation">อาชีพ</label>
+                    <input type="text" class="form-control" name="occupation">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="income">รายได้เฉลี่ย (บาท/เดือน)</label>
+                    <input type="number" class="form-control" name="income">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idcard">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" name="idcard">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <label>เลขที่</label>
+                    <input type="text" class="form-control" name="address_no">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่ที่</label>
+                    <input type="text" class="form-control" name="moo">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ตรอก/ซอย</label>
+                    <input type="text" class="form-control" name="soi">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ถนน</label>
+                    <input type="text" class="form-control" name="road">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่บ้าน</label>
+                    <input type="text" class="form-control" name="village">
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>จังหวัด</label>
+                    <input type="text" class="form-control" name="province_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>อำเภอ/เขต</label>
+                    <input type="text" class="form-control" name="district_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>ตำบล/แขวง</label>
+                    <input type="text" class="form-control" name="sub_district_id">
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" name="zipcode">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>โทรศัพท์</label>
+                    <input type="text" class="form-control" name="phone">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- ที่อยู่สามี/ภรรยา --}}
+    <div id="section-spouse" class="card mb-4 d-none">
+        <div class="card-header bg-info text-white">ที่อยู่สามี/ภรรยา</div>
+        <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="father_title">คำนำหน้าชื่อ</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_fname">บิดาชื่อ</label>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_lname">นามสกุล</label>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_age">อายุ (ปี)</label>
+                    <input type="number" class="form-control" name="age">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="occupation">อาชีพ</label>
+                    <input type="text" class="form-control" name="occupation">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="income">รายได้เฉลี่ย (บาท/เดือน)</label>
+                    <input type="number" class="form-control" name="income">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idcard">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" name="idcard">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <label>เลขที่</label>
+                    <input type="text" class="form-control" name="address_no">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่ที่</label>
+                    <input type="text" class="form-control" name="moo">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ตรอก/ซอย</label>
+                    <input type="text" class="form-control" name="soi">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ถนน</label>
+                    <input type="text" class="form-control" name="road">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่บ้าน</label>
+                    <input type="text" class="form-control" name="village">
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>จังหวัด</label>
+                    <input type="text" class="form-control" name="province_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>อำเภอ/เขต</label>
+                    <input type="text" class="form-control" name="district_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>ตำบล/แขวง</label>
+                    <input type="text" class="form-control" name="sub_district_id">
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" name="zipcode">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>โทรศัพท์</label>
+                    <input type="text" class="form-control" name="phone">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ที่อยู่ญาติ --}}
+    <div id="section-relative" class="card mb-4 d-none">
+        <div class="card-header bg-warning text-dark">ที่อยู่ญาติ</div>
+        <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="father_title">คำนำหน้าชื่อ</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_fname">บิดาชื่อ</label>
+                    <input type="text" class="form-control" name="fname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_lname">นามสกุล</label>
+                    <input type="text" class="form-control" name="lname">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="father_age">อายุ (ปี)</label>
+                    <input type="number" class="form-control" name="age">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="occupation">อาชีพ</label>
+                    <input type="text" class="form-control" name="occupation">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="income">รายได้เฉลี่ย (บาท/เดือน)</label>
+                    <input type="number" class="form-control" name="income">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idcard">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" name="idcard">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <label>เลขที่</label>
+                    <input type="text" class="form-control" name="address_no">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่ที่</label>
+                    <input type="text" class="form-control" name="moo">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ตรอก/ซอย</label>
+                    <input type="text" class="form-control" name="soi">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>ถนน</label>
+                    <input type="text" class="form-control" name="road">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>หมู่บ้าน</label>
+                    <input type="text" class="form-control" name="village">
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>จังหวัด</label>
+                    <input type="text" class="form-control" name="province_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>อำเภอ/เขต</label>
+                    <input type="text" class="form-control" name="district_id">
+                </div>
+
+                 <div class="col-md-4 mb-3">
+                    <label>ตำบล/แขวง</label>
+                    <input type="text" class="form-control" name="sub_district_id">
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" name="zipcode">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>โทรศัพท์</label>
+                    <input type="text" class="form-control" name="phone">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">จัดเก็บ</button>
+        <button type="reset" class="btn btn-secondary">เคลียร์</button>
+    </div>
+</form>
+
+{{-- JavaScript สำหรับ toggle --}}
+<script>
+    function toggleSection(section) {
+        const el = document.getElementById('section-' + section);
+        el.classList.toggle('d-none');
+    }
+</script>
+     
 @endsection

@@ -153,8 +153,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/recipient/add', 'RecipientAdd')->name('recipient.add');
         Route::post('/recipient/store', 'RecipientStore')->name('recipient.store');
         Route::get('/recipient/edit/{id}', 'RecipientEdit')->name('recipient.edit');
-        Route::post('/recipient/update', 'RecipientUpdate')->name('recipient.update');
-        Route::get('/recipient/delete/{id}', 'RecipientDelete')->name('recipient.delete');      
+        Route::post('/recipient/update/{id}', 'RecipientUpdate')->name('recipient.update');
+        Route::get('/recipient/delete', 'RecipientDelete')->name('recipient.delete');      
     });
      //dynamic route
         Route::get('/get-districts/{province}', [RecipientController::class, 'getDistricts']);
@@ -165,7 +165,7 @@ Route::middleware('auth')->group(function () {
 //-- Child All Route --//
 Route::middleware('auth')->group(function () {
     Route::controller(ChildController::class)->group(function () { 
-        Route::get('/all/child/{id}', 'AllChild')->name('all.child'); 
+        Route::get('/child/report/{id}', 'AllChild')->name('child.report'); 
        
     });
 });

@@ -38,6 +38,13 @@ class Recipient extends Model
     public function contact()        { return $this->belongsTo(Contact::class, 'contact_id'); }
     public function status()         { return $this->belongsTo(Status::class, 'status_id'); }
 
+
+  // Relationships ครอบครัว บิดา มารดา สามี/ภรรยา
+    public function father()        {return $this->hasOne(Father::class);}
+    public function mother()        {return $this->hasOne(Mother::class);}
+    public function spouse()        {return $this->hasOne(Spouse::class);}
+    public function relative()      {return $this->hasOne(Relative::class);}
+
     // Accessor: คำนำหน้าตามอายุ
     public function getAdjustedTitleAttribute()
     {
